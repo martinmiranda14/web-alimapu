@@ -1,6 +1,6 @@
 ---
-name: "Manuel Santibáñez"
+name: "Jobel Torres"
 instrument: "Trombón"
 section: "bronces"
-order: 76
+order: 78
 ---

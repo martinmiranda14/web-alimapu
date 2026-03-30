@@ -1,6 +1,6 @@
 ---
 name: "Javiera Jara Arellano"
-instrument: "Cello"
+instrument: "Violonchello"
 section: "cuerdas"
 order: 40
 ---

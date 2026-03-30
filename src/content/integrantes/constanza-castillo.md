@@ -1,5 +1,5 @@
 ---
-name: "José Meneses Aravena"
+name: "Constanza Castillo"
 instrument: "Violín I"
 section: "cuerdas"
 order: 13

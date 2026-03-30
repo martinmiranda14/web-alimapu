@@ -1,6 +1,6 @@
 ---
 name: "Scarlett Antonia Arias Cubillos"
-instrument: "Viola / Concertino"
+instrument: "Viola"
 section: "cuerdas"
 order: 1
 featured: true

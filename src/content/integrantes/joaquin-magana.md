@@ -1,6 +1,6 @@
 ---
-name: "Elizabeth Godoy Molina"
+name: "Joaquín Magaña"
 instrument: "Percusión"
 section: "percusion"
-order: 81
+order: 80
 ---

@@ -1,6 +1,6 @@
 ---
 name: "Dane Llancamán Torres"
-instrument: "Flauta Traversa"
+instrument: "Flauta"
 section: "maderas"
 order: 60
 ---
