@@ -37,6 +37,7 @@ const sections = [
               src={assetPath(featuredMember.data.photo)}
               alt={featuredMember.data.name}
               class="w-40 h-40 rounded-full object-cover shrink-0 shadow-lg"
+              style={featuredMember.data.photoPosition ? `object-position: ${featuredMember.data.photoPosition}` : ''}
             />
           ) : (
             <div class="w-40 h-40 rounded-full bg-primary-100 flex items-center justify-center shrink-0 shadow-lg">
@@ -75,12 +76,14 @@ const sections = [
               data-photo={member.data.photo ? assetPath(member.data.photo) : ''}
               data-bio={member.data.bio || ''}
               data-featured={member.data.featured ? 'true' : ''}
+              data-photo-position={member.data.photoPosition || ''}
             >
               {member.data.photo ? (
                 <img
                   src={assetPath(member.data.photo)}
                   alt={member.data.name}
                   class="w-12 h-12 rounded-full object-cover shrink-0"
+                  style={member.data.photoPosition ? `object-position: ${member.data.photoPosition}` : ''}
                   loading="lazy"
                 />
               ) : (
@@ -117,12 +120,14 @@ const sections = [
               data-photo={member.data.photo ? assetPath(member.data.photo) : ''}
               data-bio={member.data.bio || ''}
               data-featured={member.data.featured ? 'true' : ''}
+              data-photo-position={member.data.photoPosition || ''}
             >
               {member.data.photo ? (
                 <img
                   src={assetPath(member.data.photo)}
                   alt={member.data.name}
                   class="w-12 h-12 rounded-full object-cover shrink-0"
+                  style={member.data.photoPosition ? `object-position: ${member.data.photoPosition}` : ''}
                   loading="lazy"
                 />
               ) : (
@@ -185,13 +190,15 @@ const sections = [
         const photo = card.dataset.photo || '';
         const bio = card.dataset.bio || '';
         const featured = card.dataset.featured === 'true';
+        const photoPosition = card.dataset.photoPosition || '';
 
         nameEl!.textContent = name;
         instrumentEl!.textContent = instrument;
         sectionEl!.textContent = section;
 
         if (photo) {
-          photoContainer!.innerHTML = `<img src="${photo}" alt="${name}" class="w-32 h-32 rounded-full object-cover shadow-lg" />`;
+          const posStyle = photoPosition ? ` style="object-position: ${photoPosition}"` : '';
+          photoContainer!.innerHTML = `<img src="${photo}" alt="${name}" class="w-32 h-32 rounded-full object-cover shadow-lg"${posStyle} />`;
         } else {
           const initials = name.split(' ').map((n: string) => n[0]).join('').slice(0, 2);
           photoContainer!.innerHTML = `<div class="w-32 h-32 rounded-full bg-primary-100 flex items-center justify-center shadow-lg"><span class="text-primary-700 font-bold text-3xl">${initials}</span></div>`;

@@ -74,11 +74,15 @@ const schema = breadcrumbSchema([
                 </div>
               )}
               <div class="mt-4 flex gap-2">
-                {concert.data.isFree && (
+                {concert.data.isFree ? (
                   <span class="bg-green-100 text-green-800 text-xs font-medium px-2 py-1 rounded">
                     Entrada Liberada
                   </span>
-                )}
+                ) : concert.data.ticketUrl ? (
+                  <span class="bg-accent-100 text-accent-800 text-xs font-medium px-2 py-1 rounded">
+                    Entradas Disponibles
+                  </span>
+                ) : null}
                 <span class="bg-primary-100 text-primary-800 text-xs font-medium px-2 py-1 rounded capitalize">
                   {concert.data.ensemble}
                 </span>
