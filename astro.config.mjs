@@ -8,7 +8,8 @@ import icon from 'astro-icon';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://orquestaalimapu.cl',
+  site: 'https://martinmiranda14.github.io',
+  base: '/web-alimapu',
   vite: {
     plugins: [tailwindcss()],
   },
