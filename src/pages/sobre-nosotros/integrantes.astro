@@ -10,7 +10,7 @@ const allMembers = await getCollection('integrantes', ({ data }) => data.isActiv
 const sortedMembers = allMembers.sort((a, b) => a.data.order - b.data.order);
 
 const featuredMember = sortedMembers.find((m) => m.data.featured);
-const regularMembers = sortedMembers.filter((m) => !m.data.featured);
+const regularMembers = sortedMembers;
 
 const sections = [
   { key: 'cuerdas', label: 'Cuerdas' },
