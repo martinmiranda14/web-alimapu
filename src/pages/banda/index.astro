@@ -42,7 +42,7 @@ const upcomingBand = bandConcerts
       <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {upcomingBand.map((concert) => (
           <a
-            href={`/agenda/${concert.id}/`}
+            href={`${import.meta.env.BASE_URL}agenda/${concert.id}/`}
             class="scroll-reveal group block bg-white rounded-xl shadow-sm hover:shadow-lg transition-all overflow-hidden"
           >
             <div class="bg-primary-950 p-4 text-center">
@@ -66,7 +66,7 @@ const upcomingBand = bandConcerts
       <div class="grid gap-6 md:grid-cols-2">
         {sortedNews.map((item) => (
           <a
-            href={`/noticias/${item.id}/`}
+            href={`${import.meta.env.BASE_URL}noticias/${item.id}/`}
             class="scroll-reveal group block bg-surface-50 rounded-xl p-6 hover:shadow-md transition-all"
           >
             <p class="text-sm text-gray-500">{formatDateShort(item.data.date)}</p>

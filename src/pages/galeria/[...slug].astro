@@ -24,7 +24,7 @@ const { data } = album;
 >
   <div class="bg-primary-950 pt-8 pb-12">
     <div class="container mx-auto px-4">
-      <a href="/galeria/" class="text-accent-400 hover:text-accent-300 text-sm transition-colors mb-4 inline-block">
+      <a href={`${import.meta.env.BASE_URL}galeria/`} class="text-accent-400 hover:text-accent-300 text-sm transition-colors mb-4 inline-block">
         &larr; Volver a Galería
       </a>
       <h1 class="font-display text-3xl md:text-4xl font-bold text-white mt-2">{data.title}</h1>

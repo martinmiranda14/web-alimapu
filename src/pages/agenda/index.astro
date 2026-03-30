@@ -44,7 +44,7 @@ const schema = breadcrumbSchema([
       <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
         {upcoming.map((concert) => (
           <a
-            href={`/agenda/${concert.id}/`}
+            href={`${import.meta.env.BASE_URL}agenda/${concert.id}/`}
             class="scroll-reveal group block bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden"
           >
             <div class="bg-primary-950 p-4 text-center">
@@ -102,7 +102,7 @@ const schema = breadcrumbSchema([
       <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {past.map((concert) => (
           <a
-            href={`/agenda/${concert.id}/`}
+            href={`${import.meta.env.BASE_URL}agenda/${concert.id}/`}
             class="scroll-reveal group block bg-surface-50 rounded-xl overflow-hidden opacity-80 hover:opacity-100 transition-all"
           >
             <div class="p-6">

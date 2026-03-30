@@ -4,6 +4,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import HeroSection from '../../components/ui/HeroSection.astro';
 import Section from '../../components/ui/Section.astro';
 import SectionHeading from '../../components/ui/SectionHeading.astro';
+import { assetPath } from '../../utils/paths';
 
 const allMembers = await getCollection('integrantes', ({ data }) => data.isActive);
 const sortedMembers = allMembers.sort((a, b) => a.data.order - b.data.order);
@@ -33,7 +34,7 @@ const sections = [
             <div class="scroll-reveal flex items-center gap-4 bg-white rounded-lg shadow-sm p-4">
               {member.data.photo ? (
                 <img
-                  src={member.data.photo}
+                  src={assetPath(member.data.photo)}
                   alt={member.data.name}
                   class="w-12 h-12 rounded-full object-cover shrink-0"
                   loading="lazy"

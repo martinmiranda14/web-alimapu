@@ -1,28 +1,29 @@
 ---
+const base = import.meta.env.BASE_URL;
 const currentPath = Astro.url.pathname;
 
 const navItems = [
-  { label: 'Inicio', href: '/' },
-  { label: 'Agenda', href: '/agenda/' },
-  { label: 'Noticias', href: '/noticias/' },
-  { label: 'Galería', href: '/galeria/' },
-  { label: 'Banda', href: '/banda/' },
-  { label: 'Audiciones', href: '/audiciones/' },
+  { label: 'Inicio', href: `${base}` },
+  { label: 'Agenda', href: `${base}agenda/` },
+  { label: 'Noticias', href: `${base}noticias/` },
+  { label: 'Galería', href: `${base}galeria/` },
+  { label: 'Banda', href: `${base}banda/` },
+  { label: 'Audiciones', href: `${base}audiciones/` },
   {
     label: 'Sobre Nosotros',
-    href: '/sobre-nosotros/',
+    href: `${base}sobre-nosotros/`,
     children: [
-      { label: 'Equipo', href: '/sobre-nosotros/equipo/' },
-      { label: 'Integrantes', href: '/sobre-nosotros/integrantes/' },
-      { label: 'Dirección', href: '/sobre-nosotros/direccion/' },
-      { label: 'Dossier', href: '/sobre-nosotros/dossier/' },
+      { label: 'Equipo', href: `${base}sobre-nosotros/equipo/` },
+      { label: 'Integrantes', href: `${base}sobre-nosotros/integrantes/` },
+      { label: 'Dirección', href: `${base}sobre-nosotros/direccion/` },
+      { label: 'Dossier', href: `${base}sobre-nosotros/dossier/` },
     ],
   },
-  { label: 'Contacto', href: '/contacto/' },
+  { label: 'Contacto', href: `${base}contacto/` },
 ];
 
 function isActive(href: string): boolean {
-  if (href === '/') return currentPath === '/';
+  if (href === base) return currentPath === base;
   return currentPath.startsWith(href);
 }
 ---
@@ -33,7 +34,7 @@ function isActive(href: string): boolean {
 >
   <nav class="container mx-auto px-4 flex items-center justify-between h-16 lg:h-20">
     <!-- Logo -->
-    <a href="/" class="flex items-center gap-3 text-white font-display text-xl font-bold">
+    <a href={base} class="flex items-center gap-3 text-white font-display text-xl font-bold">
       <span>Alimapu</span>
     </a>
 

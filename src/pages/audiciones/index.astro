@@ -35,7 +35,7 @@ const sectionLabels: Record<string, string> = {
         <div class="grid gap-8 md:grid-cols-2">
           {openAuditions.map((audition) => (
             <a
-              href={`/audiciones/${audition.id}/`}
+              href={`${import.meta.env.BASE_URL}audiciones/${audition.id}/`}
               class="scroll-reveal group block bg-white rounded-xl shadow-sm hover:shadow-lg transition-all overflow-hidden"
             >
               <div class="bg-accent-500 p-3">

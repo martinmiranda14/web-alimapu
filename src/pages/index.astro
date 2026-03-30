@@ -7,6 +7,8 @@ import SectionHeading from '../components/ui/SectionHeading.astro';
 import { musicGroupSchema } from '../utils/schema';
 import { formatDateShort } from '../utils/date';
 
+const base = import.meta.env.BASE_URL;
+
 const today = new Date();
 
 const allConcerts = await getCollection('conciertos', ({ data }) => !data.draft && !data.isCancelled);
@@ -37,13 +39,13 @@ const schema = musicGroupSchema();
   >
     <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center" style="animation: fade-in-up 0.6s ease-out 0.4s forwards; opacity: 0;">
       <a
-        href="/agenda/"
+        href={`${base}agenda/`}
         class="inline-flex items-center justify-center px-8 py-3 bg-accent-500 hover:bg-accent-600 text-white font-semibold rounded-lg transition-colors"
       >
         Próximos Conciertos
       </a>
       <a
-        href="/sobre-nosotros/"
+        href={`${base}sobre-nosotros/`}
         class="inline-flex items-center justify-center px-8 py-3 border-2 border-white/50 hover:border-white text-white font-semibold rounded-lg transition-colors"
       >
         Conócenos
@@ -61,7 +63,7 @@ const schema = musicGroupSchema();
       <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {upcomingConcerts.map((concert) => (
           <a
-            href={`/agenda/${concert.id}/`}
+            href={`${base}agenda/${concert.id}/`}
             class="scroll-reveal group block bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden"
           >
             <div class="bg-primary-950 p-4 text-center">
@@ -92,7 +94,7 @@ const schema = musicGroupSchema();
     )}
     <div class="text-center mt-10">
       <a
-        href="/agenda/"
+        href={`${base}agenda/`}
         class="inline-flex items-center text-primary-700 hover:text-primary-900 font-semibold transition-colors"
       >
         Ver toda la agenda
@@ -122,7 +124,7 @@ const schema = musicGroupSchema();
           incendios forestales.
         </p>
         <a
-          href="/sobre-nosotros/"
+          href={`${base}sobre-nosotros/`}
           class="inline-flex items-center text-primary-700 hover:text-primary-900 font-semibold transition-colors"
         >
           Conoce nuestra historia
@@ -157,7 +159,7 @@ const schema = musicGroupSchema();
     <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
       {latestNews.map((news) => (
         <a
-          href={`/noticias/${news.id}/`}
+          href={`${base}noticias/${news.id}/`}
           class="scroll-reveal group block bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden"
         >
           <div class="p-6">
@@ -172,7 +174,7 @@ const schema = musicGroupSchema();
     </div>
     <div class="text-center mt-10">
       <a
-        href="/noticias/"
+        href={`${base}noticias/`}
         class="inline-flex items-center text-primary-700 hover:text-primary-900 font-semibold transition-colors"
       >
         Ver todas las noticias
@@ -194,7 +196,7 @@ const schema = musicGroupSchema();
         Revisa nuestras audiciones abiertas.
       </p>
       <a
-        href="/audiciones/"
+        href={`${base}audiciones/`}
         class="inline-flex items-center justify-center px-8 py-3 bg-accent-500 hover:bg-accent-600 text-white font-semibold rounded-lg transition-colors"
       >
         Ver Audiciones

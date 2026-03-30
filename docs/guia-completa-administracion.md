@@ -108,7 +108,7 @@ Más texto con **negrita** o *cursiva* si lo necesitas.
 | `image`        | No          | Ruta a la imagen (ver sección "Subir imágenes")              |
 | `imageAlt`     | No          | Descripción de la imagen (para accesibilidad)                |
 | `program`      | No          | Lista de obras (ver plantilla)                               |
-| `ensemble`     | Sí          | `"orquesta"` o `"banda"`                                     |
+| `ensemble`     | Sí          | `"orquesta"`, `"banda"` o `"camara"`                         |
 | `isFree`       | No          | `true` si es gratis, `false` si tiene entrada                |
 | `ticketUrl`    | No          | Link para comprar entradas (solo si `isFree: false`)         |
 | `isCancelled`  | No          | `true` si se canceló el concierto                            |

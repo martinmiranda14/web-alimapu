@@ -40,7 +40,7 @@ const conciertos = defineCollection({
         })
       )
       .optional(),
-    ensemble: z.enum(['orquesta', 'banda']).default('orquesta'),
+    ensemble: z.enum(['orquesta', 'banda', 'camara']).default('orquesta'),
     isFree: z.boolean().default(true),
     ticketUrl: z.string().url().optional(),
     isCancelled: z.boolean().default(false),

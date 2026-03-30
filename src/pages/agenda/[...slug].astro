@@ -4,6 +4,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Section from '../../components/ui/Section.astro';
 import { concertEventSchema, breadcrumbSchema } from '../../utils/schema';
 import { formatDateLong } from '../../utils/date';
+import { assetPath } from '../../utils/paths';
 
 export async function getStaticPaths() {
   const concerts = await getCollection('conciertos');
@@ -46,10 +47,21 @@ const schemas = [
   imageAlt={data.imageAlt}
   schema={schemas}
 >
+  <!-- Image Banner -->
+  {data.image && (
+    <div class="w-full max-h-[400px] overflow-hidden">
+      <img
+        src={assetPath(data.image)}
+        alt={data.imageAlt || data.title}
+        class="w-full h-full object-cover"
+      />
+    </div>
+  )}
+
   <!-- Hero -->
   <div class="bg-primary-950 pt-8 pb-12">
     <div class="container mx-auto px-4">
-      <a href="/agenda/" class="text-accent-400 hover:text-accent-300 text-sm transition-colors mb-4 inline-block">
+      <a href={`${import.meta.env.BASE_URL}agenda/`} class="text-accent-400 hover:text-accent-300 text-sm transition-colors mb-4 inline-block">
         &larr; Volver a la Agenda
       </a>
       <h1 class="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-white mt-2">

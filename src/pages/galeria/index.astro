@@ -20,7 +20,7 @@ const sortedAlbums = albums.sort((a, b) => b.data.date.getTime() - a.data.date.g
       <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
         {sortedAlbums.map((album) => (
           <a
-            href={`/galeria/${album.id}/`}
+            href={`${import.meta.env.BASE_URL}galeria/${album.id}/`}
             class="scroll-reveal group block bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden"
           >
             <div class="aspect-video bg-primary-100 flex items-center justify-center">
