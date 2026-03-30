@@ -77,10 +77,10 @@ const schema = breadcrumbSchema([
     <SectionHeading title="Conoce más" align="center" />
     <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4 max-w-4xl mx-auto">
       {[
-        { title: 'Equipo Directivo', href: '/sobre-nosotros/equipo/', desc: 'Las personas detrás del proyecto' },
-        { title: 'Integrantes', href: '/sobre-nosotros/integrantes/', desc: 'Nuestros músicos' },
-        { title: 'Dirección', href: '/sobre-nosotros/direccion/', desc: 'Dirección musical' },
-        { title: 'Dossier', href: '/sobre-nosotros/dossier/', desc: 'Información institucional' },
+        { title: 'Equipo Directivo', href: `${import.meta.env.BASE_URL}sobre-nosotros/equipo/`, desc: 'Las personas detrás del proyecto' },
+        { title: 'Integrantes', href: `${import.meta.env.BASE_URL}sobre-nosotros/integrantes/`, desc: 'Nuestros músicos' },
+        { title: 'Dirección', href: `${import.meta.env.BASE_URL}sobre-nosotros/direccion/`, desc: 'Dirección musical' },
+        { title: 'Dossier', href: `${import.meta.env.BASE_URL}sobre-nosotros/dossier/`, desc: 'Información institucional' },
       ].map((link) => (
         <a
           href={link.href}
