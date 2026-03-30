@@ -47,17 +47,6 @@ const schemas = [
   imageAlt={data.imageAlt}
   schema={schemas}
 >
-  <!-- Image Banner -->
-  {data.image && (
-    <div class="w-full max-h-[400px] overflow-hidden">
-      <img
-        src={assetPath(data.image)}
-        alt={data.imageAlt || data.title}
-        class="w-full h-full object-cover"
-      />
-    </div>
-  )}
-
   <!-- Hero -->
   <div class="bg-primary-950 pt-8 pb-12">
     <div class="container mx-auto px-4">
@@ -102,39 +91,55 @@ const schemas = [
   </div>
 
   <Section bg="white">
-    <div class="max-w-3xl">
-      {data.program && data.program.length > 0 && (
-        <div class="mb-10 bg-surface-50 rounded-xl p-6">
-          <h2 class="font-display text-2xl font-bold text-primary-950 mb-4">Programa</h2>
-          <div class="space-y-3">
-            {data.program.map((item) => (
-              <div class="flex flex-col">
-                <span class="font-semibold text-gray-900">{item.composer}</span>
-                <span class="text-gray-600">{item.work}</span>
-                {item.soloist && <span class="text-accent-600 text-sm">{item.soloist}</span>}
-              </div>
-            ))}
+    <div class:list={["grid gap-10", data.image ? "lg:grid-cols-[1fr_auto]" : "max-w-3xl"]}>
+      <!-- Contenido principal -->
+      <div>
+        {data.program && data.program.length > 0 && (
+          <div class="mb-10 bg-surface-50 rounded-xl p-6">
+            <h2 class="font-display text-2xl font-bold text-primary-950 mb-4">Programa</h2>
+            <div class="space-y-3">
+              {data.program.map((item) => (
+                <div class="flex flex-col">
+                  <span class="font-semibold text-gray-900">{item.composer}</span>
+                  <span class="text-gray-600">{item.work}</span>
+                  {item.soloist && <span class="text-accent-600 text-sm">{item.soloist}</span>}
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
-      <div class="prose prose-lg max-w-none">
-        <Content />
+        <div class="prose prose-lg max-w-none">
+          <Content />
+        </div>
+
+        {data.venueMapUrl && (
+          <div class="mt-10">
+            <a
+              href={data.venueMapUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 text-primary-700 hover:text-primary-900 font-semibold transition-colors"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+              </svg>
+              Ver ubicación en Google Maps
+            </a>
+          </div>
+        )}
       </div>
 
-      {data.venueMapUrl && (
-        <div class="mt-10">
-          <a
-            href={data.venueMapUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="inline-flex items-center gap-2 text-primary-700 hover:text-primary-900 font-semibold transition-colors"
-          >
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-            </svg>
-            Ver ubicación en Google Maps
-          </a>
+      <!-- Afiche al costado (si hay imagen) -->
+      {data.image && (
+        <div class="lg:w-80 order-first lg:order-last">
+          <div class="sticky top-24 rounded-xl overflow-hidden shadow-lg">
+            <img
+              src={assetPath(data.image)}
+              alt={data.imageAlt || data.title}
+              class="w-full h-auto object-contain"
+            />
+          </div>
         </div>
       )}
     </div>
