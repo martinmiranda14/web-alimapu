@@ -11,7 +11,7 @@ requirements:
   - "Preparar dos movimientos contrastantes de un concierto para instrumento solo"
   - "Lectura a primera vista"
 contactEmail: "contacto@orquestaalimapu.cl"
-isOpen: true
+isOpen: false
 draft: false
 ---
 
