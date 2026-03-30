@@ -57,6 +57,7 @@ const integrantes = defineCollection({
     photo: z.string().optional(),
     order: z.number().default(99),
     isActive: z.boolean().default(true),
+    featured: z.boolean().default(false),
     bio: z.string().optional(),
   }),
 });
