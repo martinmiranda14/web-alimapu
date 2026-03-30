@@ -1,0 +1,78 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Section from '../../components/ui/Section.astro';
+import { newsArticleSchema, breadcrumbSchema } from '../../utils/schema';
+import { formatDateLong } from '../../utils/date';
+
+export async function getStaticPaths() {
+  const news = await getCollection('noticias');
+  return news.map((item) => ({
+    params: { slug: item.id },
+    props: item,
+  }));
+}
+
+const item = Astro.props;
+const { Content } = await render(item);
+const { data } = item;
+
+const schemas = [
+  breadcrumbSchema([
+    { name: 'Inicio', url: 'https://orquestaalimapu.cl/' },
+    { name: 'Noticias', url: 'https://orquestaalimapu.cl/noticias/' },
+    { name: data.title, url: `https://orquestaalimapu.cl/noticias/${item.id}/` },
+  ]),
+  newsArticleSchema({
+    title: data.title,
+    description: data.description,
+    date: data.date,
+    updatedDate: data.updatedDate,
+    image: data.image,
+    slug: item.id,
+    author: data.author,
+  }),
+];
+---
+
+<BaseLayout
+  title={data.title}
+  description={data.description}
+  image={data.image}
+  imageAlt={data.imageAlt}
+  type="article"
+  publishedDate={data.date}
+  modifiedDate={data.updatedDate}
+  schema={schemas}
+>
+  <div class="bg-primary-950 pt-8 pb-12">
+    <div class="container mx-auto px-4">
+      <a href="/noticias/" class="text-accent-400 hover:text-accent-300 text-sm transition-colors mb-4 inline-block">
+        &larr; Volver a Noticias
+      </a>
+      <h1 class="font-display text-3xl md:text-4xl font-bold text-white mt-2">
+        {data.title}
+      </h1>
+      <div class="mt-4 flex items-center gap-4 text-gray-400 text-sm">
+        <time datetime={data.date.toISOString()}>
+          {formatDateLong(data.date)}
+        </time>
+        <span>&bull;</span>
+        <span>{data.author}</span>
+      </div>
+      {data.tags.length > 0 && (
+        <div class="mt-3 flex flex-wrap gap-2">
+          {data.tags.map((tag) => (
+            <span class="text-xs bg-white/10 text-gray-300 px-2 py-1 rounded">{tag}</span>
+          ))}
+        </div>
+      )}
+    </div>
+  </div>
+
+  <Section bg="white">
+    <article class="prose prose-lg max-w-3xl">
+      <Content />
+    </article>
+  </Section>
+</BaseLayout>

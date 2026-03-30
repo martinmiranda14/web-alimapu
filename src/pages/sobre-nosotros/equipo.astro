@@ -1,0 +1,36 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HeroSection from '../../components/ui/HeroSection.astro';
+import Section from '../../components/ui/Section.astro';
+import SectionHeading from '../../components/ui/SectionHeading.astro';
+
+const team = await getCollection('equipo-directivo');
+const sortedTeam = team.sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout
+  title="Equipo Directivo"
+  description="Conoce al equipo directivo de la Orquesta Filarmónica Alimapu."
+>
+  <HeroSection title="Equipo Directivo" subtitle="Las personas detrás del proyecto" height="sm" />
+
+  <Section bg="light">
+    <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3 max-w-4xl mx-auto">
+      {sortedTeam.map((member) => (
+        <div class="scroll-reveal bg-white rounded-xl shadow-sm p-6 text-center">
+          <div class="w-24 h-24 mx-auto rounded-full bg-primary-100 flex items-center justify-center mb-4">
+            <span class="text-primary-700 font-display text-2xl font-bold">
+              {member.data.name.split(' ').map(n => n[0]).join('').slice(0, 2)}
+            </span>
+          </div>
+          <h3 class="font-display text-lg font-bold text-primary-950">{member.data.name}</h3>
+          <p class="text-accent-600 text-sm font-medium mt-1">{member.data.role}</p>
+          {member.data.bio && (
+            <p class="text-gray-600 text-sm mt-3">{member.data.bio}</p>
+          )}
+        </div>
+      ))}
+    </div>
+  </Section>
+</BaseLayout>

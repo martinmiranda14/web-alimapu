@@ -1,0 +1,92 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Section from '../../components/ui/Section.astro';
+import { formatDateLong } from '../../utils/date';
+
+export async function getStaticPaths() {
+  const auditions = await getCollection('audiciones');
+  return auditions.map((audition) => ({
+    params: { slug: audition.id },
+    props: audition,
+  }));
+}
+
+const audition = Astro.props;
+const { Content } = await render(audition);
+const { data } = audition;
+---
+
+<BaseLayout
+  title={data.title}
+  description={data.description}
+>
+  <div class="bg-primary-950 pt-8 pb-12">
+    <div class="container mx-auto px-4">
+      <a href="/audiciones/" class="text-accent-400 hover:text-accent-300 text-sm transition-colors mb-4 inline-block">
+        &larr; Volver a Audiciones
+      </a>
+      <h1 class="font-display text-3xl md:text-4xl font-bold text-white mt-2">{data.title}</h1>
+      <div class="mt-4 flex flex-wrap gap-4">
+        <span class:list={[
+          'px-3 py-1 rounded text-sm font-medium',
+          data.isOpen ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800',
+        ]}>
+          {data.isOpen ? 'Convocatoria Abierta' : 'Convocatoria Cerrada'}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <Section bg="white">
+    <div class="max-w-3xl">
+      <div class="bg-surface-50 rounded-xl p-6 mb-10">
+        <h2 class="font-display text-xl font-bold text-primary-950 mb-4">Información</h2>
+        <dl class="space-y-3 text-sm">
+          <div class="flex gap-2">
+            <dt class="font-semibold text-gray-700 w-32">Instrumento:</dt>
+            <dd class="text-gray-600">{data.instrument}</dd>
+          </div>
+          <div class="flex gap-2">
+            <dt class="font-semibold text-gray-700 w-32">Cierre:</dt>
+            <dd class="text-gray-600">{formatDateLong(data.deadline)}</dd>
+          </div>
+          {data.auditionDate && (
+            <div class="flex gap-2">
+              <dt class="font-semibold text-gray-700 w-32">Audición:</dt>
+              <dd class="text-gray-600">{formatDateLong(data.auditionDate)}</dd>
+            </div>
+          )}
+          <div class="flex gap-2">
+            <dt class="font-semibold text-gray-700 w-32">Contacto:</dt>
+            <dd>
+              <a href={`mailto:${data.contactEmail}`} class="text-primary-700 hover:underline">
+                {data.contactEmail}
+              </a>
+            </dd>
+          </div>
+        </dl>
+      </div>
+
+      {data.requirements && data.requirements.length > 0 && (
+        <div class="mb-10">
+          <h2 class="font-display text-xl font-bold text-primary-950 mb-4">Requisitos</h2>
+          <ul class="space-y-2">
+            {data.requirements.map((req) => (
+              <li class="flex items-start gap-2 text-gray-600">
+                <svg class="w-5 h-5 text-accent-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                {req}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      <div class="prose prose-lg max-w-none">
+        <Content />
+      </div>
+    </div>
+  </Section>
+</BaseLayout>

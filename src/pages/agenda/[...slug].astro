@@ -1,0 +1,130 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Section from '../../components/ui/Section.astro';
+import { concertEventSchema, breadcrumbSchema } from '../../utils/schema';
+import { formatDateLong } from '../../utils/date';
+
+export async function getStaticPaths() {
+  const concerts = await getCollection('conciertos');
+  return concerts.map((concert) => ({
+    params: { slug: concert.id },
+    props: concert,
+  }));
+}
+
+const concert = Astro.props;
+const { Content } = await render(concert);
+const { data } = concert;
+
+const schemas = [
+  breadcrumbSchema([
+    { name: 'Inicio', url: 'https://orquestaalimapu.cl/' },
+    { name: 'Agenda', url: 'https://orquestaalimapu.cl/agenda/' },
+    { name: data.title, url: `https://orquestaalimapu.cl/agenda/${concert.id}/` },
+  ]),
+  concertEventSchema({
+    title: data.title,
+    description: data.description,
+    date: data.date,
+    time: data.time,
+    endTime: data.endTime,
+    venue: data.venue,
+    venueAddress: data.venueAddress,
+    isFree: data.isFree,
+    ticketUrl: data.ticketUrl,
+    slug: concert.id,
+    image: data.image,
+  }),
+];
+---
+
+<BaseLayout
+  title={data.title}
+  description={data.description}
+  image={data.image}
+  imageAlt={data.imageAlt}
+  schema={schemas}
+>
+  <!-- Hero -->
+  <div class="bg-primary-950 pt-8 pb-12">
+    <div class="container mx-auto px-4">
+      <a href="/agenda/" class="text-accent-400 hover:text-accent-300 text-sm transition-colors mb-4 inline-block">
+        &larr; Volver a la Agenda
+      </a>
+      <h1 class="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-white mt-2">
+        {data.title}
+      </h1>
+      <div class="mt-6 flex flex-wrap gap-4 text-gray-300">
+        <span class="flex items-center gap-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+          {formatDateLong(data.date)}
+        </span>
+        <span class="flex items-center gap-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          {data.time} hrs{data.endTime && ` - ${data.endTime} hrs`}
+        </span>
+        <span class="flex items-center gap-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+          {data.venue}
+        </span>
+      </div>
+      <div class="mt-4 flex gap-2">
+        {data.isFree && (
+          <span class="bg-green-100 text-green-800 text-sm font-medium px-3 py-1 rounded">
+            Entrada Liberada
+          </span>
+        )}
+        <span class="bg-white/10 text-white text-sm font-medium px-3 py-1 rounded capitalize">
+          {data.ensemble}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <Section bg="white">
+    <div class="max-w-3xl">
+      {data.program && data.program.length > 0 && (
+        <div class="mb-10 bg-surface-50 rounded-xl p-6">
+          <h2 class="font-display text-2xl font-bold text-primary-950 mb-4">Programa</h2>
+          <div class="space-y-3">
+            {data.program.map((item) => (
+              <div class="flex flex-col">
+                <span class="font-semibold text-gray-900">{item.composer}</span>
+                <span class="text-gray-600">{item.work}</span>
+                {item.soloist && <span class="text-accent-600 text-sm">{item.soloist}</span>}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <div class="prose prose-lg max-w-none">
+        <Content />
+      </div>
+
+      {data.venueMapUrl && (
+        <div class="mt-10">
+          <a
+            href={data.venueMapUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 text-primary-700 hover:text-primary-900 font-semibold transition-colors"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+            </svg>
+            Ver ubicación en Google Maps
+          </a>
+        </div>
+      )}
+    </div>
+  </Section>
+</BaseLayout>

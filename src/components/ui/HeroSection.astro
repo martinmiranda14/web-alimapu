@@ -1,0 +1,59 @@
+---
+interface Props {
+  title: string;
+  subtitle?: string;
+  backgroundImage?: string;
+  overlay?: 'light' | 'dark' | 'gradient';
+  height?: 'sm' | 'md' | 'lg' | 'full';
+  align?: 'left' | 'center';
+}
+
+const {
+  title,
+  subtitle,
+  backgroundImage,
+  overlay = 'dark',
+  height = 'md',
+  align = 'center',
+} = Astro.props;
+
+const heightClasses: Record<string, string> = {
+  sm: 'min-h-[30vh]',
+  md: 'min-h-[50vh]',
+  lg: 'min-h-[70vh]',
+  full: 'min-h-screen',
+};
+
+const overlayClasses: Record<string, string> = {
+  light: 'bg-black/30',
+  dark: 'bg-black/60',
+  gradient: 'bg-gradient-to-b from-black/70 via-black/40 to-black/70',
+};
+---
+
+<section
+  class:list={[
+    'relative flex items-center overflow-hidden',
+    heightClasses[height],
+  ]}
+  style={backgroundImage ? `background-image: url('${backgroundImage}'); background-size: cover; background-position: center;` : `background-color: var(--color-primary-950);`}
+>
+  <div class:list={['absolute inset-0', overlayClasses[overlay]]} />
+
+  <div
+    class:list={[
+      'relative z-10 container mx-auto px-4 py-16',
+      align === 'center' ? 'text-center' : 'text-left',
+    ]}
+  >
+    <h1 class="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 leading-tight animate-fade-in-up">
+      {title}
+    </h1>
+    {subtitle && (
+      <p class="text-lg md:text-xl text-gray-200 max-w-2xl mx-auto" style="animation: fade-in-up 0.6s ease-out 0.2s forwards; opacity: 0;">
+        {subtitle}
+      </p>
+    )}
+    <slot />
+  </div>
+</section>

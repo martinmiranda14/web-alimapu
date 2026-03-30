@@ -1,0 +1,39 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HeroSection from '../../components/ui/HeroSection.astro';
+import Section from '../../components/ui/Section.astro';
+---
+
+<BaseLayout
+  title="Dirección Musical"
+  description="Conoce a la directora musical de la Orquesta Filarmónica Alimapu."
+>
+  <HeroSection title="Dirección Musical" height="sm" />
+
+  <Section bg="white">
+    <div class="max-w-3xl mx-auto">
+      <div class="flex flex-col md:flex-row gap-8 items-start">
+        <div class="w-48 h-48 rounded-2xl bg-primary-100 flex items-center justify-center shrink-0 mx-auto md:mx-0">
+          <span class="text-primary-700 font-display text-4xl font-bold">DV</span>
+        </div>
+        <div>
+          <h2 class="font-display text-3xl font-bold text-primary-950">Danitza Villarroel Orrego</h2>
+          <p class="text-accent-600 font-medium mt-1">Directora Musical y Fundadora</p>
+          <div class="mt-6 space-y-4 text-gray-600 leading-relaxed">
+            <p>
+              Músico y gestora cultural, Danitza Villarroel es la líder y fundadora del
+              proyecto Alimapu desde sus inicios en 2017, cuando organizó un concierto
+              benéfico en el Teatro Municipal de Valparaíso en apoyo a los damnificados
+              por incendios forestales.
+            </p>
+            <p>
+              Bajo su dirección, la Orquesta Filarmónica Alimapu se ha consolidado como
+              una agrupación profesional comprometida con el desarrollo cultural de la
+              región de Valparaíso.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Section>
+</BaseLayout>

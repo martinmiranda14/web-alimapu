@@ -1,0 +1,92 @@
+---
+import SEOHead from '../components/seo/SEOHead.astro';
+import SchemaOrg from '../components/seo/SchemaOrg.astro';
+import Header from '../components/common/Header.astro';
+import Footer from '../components/common/Footer.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  imageAlt?: string;
+  type?: 'website' | 'article';
+  publishedDate?: Date;
+  modifiedDate?: Date;
+  noindex?: boolean;
+  schema?: Record<string, unknown> | Record<string, unknown>[];
+}
+
+const {
+  title,
+  description,
+  image,
+  imageAlt,
+  type = 'website',
+  publishedDate,
+  modifiedDate,
+  noindex = false,
+  schema,
+} = Astro.props;
+
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
+const fullTitle =
+  title === 'Inicio'
+    ? 'Orquesta Filarmónica Alimapu | Valparaíso, Chile'
+    : `${title} | Orquesta Filarmónica Alimapu`;
+---
+
+<!doctype html>
+<html lang="es" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <SEOHead
+      title={fullTitle}
+      description={description}
+      canonical={canonicalUrl.href}
+      image={image}
+      imageAlt={imageAlt}
+      type={type}
+      publishedDate={publishedDate}
+      modifiedDate={modifiedDate}
+      noindex={noindex}
+    />
+
+    {schema && <SchemaOrg schema={schema} />}
+  </head>
+  <body class="min-h-screen flex flex-col bg-white text-gray-900 antialiased font-body">
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-white focus:px-4 focus:py-2 focus:rounded"
+    >
+      Saltar al contenido principal
+    </a>
+    <Header />
+    <main id="main-content" class="flex-1">
+      <slot />
+    </main>
+    <Footer />
+
+    <script>
+      // Scroll reveal
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1 }
+      );
+
+      document.querySelectorAll('.scroll-reveal').forEach((el) => {
+        observer.observe(el);
+      });
+    </script>
+  </body>
+</html>

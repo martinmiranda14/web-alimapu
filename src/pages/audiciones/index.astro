@@ -1,0 +1,78 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HeroSection from '../../components/ui/HeroSection.astro';
+import Section from '../../components/ui/Section.astro';
+import SectionHeading from '../../components/ui/SectionHeading.astro';
+import { formatDateShort } from '../../utils/date';
+
+const allAuditions = await getCollection('audiciones', ({ data }) => !data.draft);
+const openAuditions = allAuditions.filter((a) => a.data.isOpen);
+const closedAuditions = allAuditions.filter((a) => !a.data.isOpen);
+
+const sectionLabels: Record<string, string> = {
+  cuerdas: 'Cuerdas',
+  maderas: 'Maderas',
+  bronces: 'Bronces',
+  percusion: 'Percusión',
+};
+---
+
+<BaseLayout
+  title="Audiciones"
+  description="Postula a la Orquesta Filarmónica Alimapu. Revisa las audiciones abiertas para músicos."
+>
+  <HeroSection
+    title="Audiciones"
+    subtitle="¿Quieres ser parte de Alimapu?"
+    height="sm"
+  />
+
+  <Section bg="light">
+    {openAuditions.length > 0 ? (
+      <>
+        <SectionHeading title="Audiciones Abiertas" />
+        <div class="grid gap-8 md:grid-cols-2">
+          {openAuditions.map((audition) => (
+            <a
+              href={`/audiciones/${audition.id}/`}
+              class="scroll-reveal group block bg-white rounded-xl shadow-sm hover:shadow-lg transition-all overflow-hidden"
+            >
+              <div class="bg-accent-500 p-3">
+                <p class="text-white text-sm font-medium text-center">Convocatoria Abierta</p>
+              </div>
+              <div class="p-6">
+                <span class="text-xs font-medium bg-primary-100 text-primary-800 px-2 py-1 rounded">
+                  {sectionLabels[audition.data.section]}
+                </span>
+                <h3 class="font-display text-xl font-bold text-primary-950 group-hover:text-primary-700 transition-colors mt-3">
+                  {audition.data.title}
+                </h3>
+                <p class="mt-2 text-gray-600 text-sm">{audition.data.description}</p>
+                <div class="mt-4 flex items-center gap-2 text-sm text-gray-500">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                  Cierre: {formatDateShort(audition.data.deadline)}
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
+      </>
+    ) : (
+      <div class="text-center py-12">
+        <h2 class="font-display text-2xl font-bold text-primary-950 mb-4">
+          No hay audiciones abiertas en este momento
+        </h2>
+        <p class="text-gray-600 max-w-lg mx-auto">
+          Síguenos en redes sociales o escríbenos a
+          <a href="mailto:contacto@orquestaalimapu.cl" class="text-primary-700 hover:underline">
+            contacto@orquestaalimapu.cl
+          </a>
+          para conocer futuras convocatorias.
+        </p>
+      </div>
+    )}
+  </Section>
+</BaseLayout>

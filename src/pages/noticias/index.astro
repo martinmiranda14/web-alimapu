@@ -1,0 +1,61 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HeroSection from '../../components/ui/HeroSection.astro';
+import Section from '../../components/ui/Section.astro';
+import SectionHeading from '../../components/ui/SectionHeading.astro';
+import { breadcrumbSchema } from '../../utils/schema';
+import { formatDateShort } from '../../utils/date';
+
+const allNews = await getCollection('noticias', ({ data }) => !data.draft);
+const news = allNews.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+const schema = breadcrumbSchema([
+  { name: 'Inicio', url: 'https://orquestaalimapu.cl/' },
+  { name: 'Noticias', url: 'https://orquestaalimapu.cl/noticias/' },
+]);
+---
+
+<BaseLayout
+  title="Noticias"
+  description="Últimas noticias y novedades de la Orquesta Filarmónica Alimapu."
+  schema={schema}
+>
+  <HeroSection
+    title="Noticias"
+    subtitle="Novedades y actividades de la orquesta"
+    height="sm"
+  />
+
+  <Section bg="light">
+    {news.length > 0 ? (
+      <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        {news.map((item) => (
+          <a
+            href={`/noticias/${item.id}/`}
+            class="scroll-reveal group block bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden"
+          >
+            <div class="p-6">
+              <p class="text-sm text-gray-500 mb-2">{formatDateShort(item.data.date)}</p>
+              <h3 class="font-display text-lg font-bold text-primary-950 group-hover:text-primary-700 transition-colors">
+                {item.data.title}
+              </h3>
+              <p class="mt-2 text-gray-600 text-sm line-clamp-3">{item.data.description}</p>
+              {item.data.tags.length > 0 && (
+                <div class="mt-4 flex flex-wrap gap-1">
+                  {item.data.tags.slice(0, 3).map((tag) => (
+                    <span class="text-xs bg-primary-50 text-primary-700 px-2 py-0.5 rounded">{tag}</span>
+                  ))}
+                </div>
+              )}
+            </div>
+          </a>
+        ))}
+      </div>
+    ) : (
+      <div class="text-center py-12">
+        <p class="text-gray-600 text-lg">No hay noticias publicadas todavía.</p>
+      </div>
+    )}
+  </Section>
+</BaseLayout>

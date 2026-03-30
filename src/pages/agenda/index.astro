@@ -1,0 +1,120 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HeroSection from '../../components/ui/HeroSection.astro';
+import Section from '../../components/ui/Section.astro';
+import SectionHeading from '../../components/ui/SectionHeading.astro';
+import { breadcrumbSchema } from '../../utils/schema';
+import { formatDateLong } from '../../utils/date';
+
+const today = new Date();
+
+const allConcerts = await getCollection('conciertos', ({ data }) => !data.draft && !data.isCancelled);
+
+const upcoming = allConcerts
+  .filter((c) => c.data.date >= today)
+  .sort((a, b) => a.data.date.getTime() - b.data.date.getTime());
+
+const past = allConcerts
+  .filter((c) => c.data.date < today)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 6);
+
+const schema = breadcrumbSchema([
+  { name: 'Inicio', url: 'https://orquestaalimapu.cl/' },
+  { name: 'Agenda', url: 'https://orquestaalimapu.cl/agenda/' },
+]);
+---
+
+<BaseLayout
+  title="Agenda de Conciertos"
+  description="Consulta los próximos conciertos de la Orquesta Filarmónica Alimapu en Valparaíso y la región."
+  schema={schema}
+>
+  <HeroSection
+    title="Agenda"
+    subtitle="Próximos conciertos y presentaciones"
+    height="sm"
+  />
+
+  <!-- Próximos Conciertos -->
+  <Section bg="light">
+    <SectionHeading title="Próximos Conciertos" />
+    {upcoming.length > 0 ? (
+      <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        {upcoming.map((concert) => (
+          <a
+            href={`/agenda/${concert.id}/`}
+            class="scroll-reveal group block bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden"
+          >
+            <div class="bg-primary-950 p-4 text-center">
+              <p class="text-accent-400 font-display text-lg font-bold">
+                {formatDateLong(concert.data.date)}
+              </p>
+              <p class="text-gray-300 text-sm">{concert.data.time} hrs</p>
+            </div>
+            <div class="p-6">
+              <h3 class="font-display text-xl font-bold text-primary-950 group-hover:text-primary-700 transition-colors">
+                {concert.data.title}
+              </h3>
+              <p class="mt-2 text-gray-600 text-sm flex items-center gap-1">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                {concert.data.venue}
+              </p>
+              {concert.data.program && (
+                <div class="mt-4 space-y-1">
+                  {concert.data.program.map((item) => (
+                    <p class="text-gray-500 text-xs">
+                      <span class="font-medium">{item.composer}</span>: {item.work}
+                    </p>
+                  ))}
+                </div>
+              )}
+              <div class="mt-4 flex gap-2">
+                {concert.data.isFree && (
+                  <span class="bg-green-100 text-green-800 text-xs font-medium px-2 py-1 rounded">
+                    Entrada Liberada
+                  </span>
+                )}
+                <span class="bg-primary-100 text-primary-800 text-xs font-medium px-2 py-1 rounded capitalize">
+                  {concert.data.ensemble}
+                </span>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+    ) : (
+      <div class="text-center py-12 bg-white rounded-lg shadow-sm">
+        <p class="text-gray-600 text-lg">No hay conciertos programados por el momento.</p>
+        <p class="text-gray-500 mt-2">Síguenos en redes sociales para enterarte de nuevas fechas.</p>
+      </div>
+    )}
+  </Section>
+
+  <!-- Conciertos Pasados -->
+  {past.length > 0 && (
+    <Section bg="white">
+      <SectionHeading title="Conciertos Recientes" />
+      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {past.map((concert) => (
+          <a
+            href={`/agenda/${concert.id}/`}
+            class="scroll-reveal group block bg-surface-50 rounded-xl overflow-hidden opacity-80 hover:opacity-100 transition-all"
+          >
+            <div class="p-6">
+              <p class="text-sm text-gray-500 mb-1">{formatDateLong(concert.data.date)}</p>
+              <h3 class="font-display text-lg font-bold text-gray-700 group-hover:text-primary-700 transition-colors">
+                {concert.data.title}
+              </h3>
+              <p class="mt-1 text-gray-500 text-sm">{concert.data.venue}</p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </Section>
+  )}
+</BaseLayout>

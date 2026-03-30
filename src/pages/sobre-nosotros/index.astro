@@ -1,0 +1,97 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HeroSection from '../../components/ui/HeroSection.astro';
+import Section from '../../components/ui/Section.astro';
+import SectionHeading from '../../components/ui/SectionHeading.astro';
+import { breadcrumbSchema } from '../../utils/schema';
+
+const schema = breadcrumbSchema([
+  { name: 'Inicio', url: 'https://orquestaalimapu.cl/' },
+  { name: 'Sobre Nosotros', url: 'https://orquestaalimapu.cl/sobre-nosotros/' },
+]);
+---
+
+<BaseLayout
+  title="Sobre Nosotros"
+  description="Conoce la historia, misión y visión de la Orquesta Filarmónica Alimapu, agrupación profesional de la región de Valparaíso."
+  schema={schema}
+>
+  <HeroSection
+    title="Sobre Nosotros"
+    subtitle="Conoce nuestra historia y compromiso cultural"
+    height="sm"
+  />
+
+  <!-- Misión -->
+  <Section bg="white">
+    <div class="max-w-3xl mx-auto scroll-reveal">
+      <SectionHeading title="Misión" align="center" />
+      <p class="text-gray-600 text-lg leading-relaxed text-center">
+        Somos una agrupación profesional, autogestionada y autónoma, comprometida con el
+        desarrollo humano y cultural de la región de Valparaíso. Buscamos transformar los
+        paradigmas tradicionales, promoviendo la inclusión y el acceso universal a la música clásica.
+      </p>
+    </div>
+  </Section>
+
+  <!-- Visión -->
+  <Section bg="light">
+    <div class="max-w-3xl mx-auto scroll-reveal">
+      <SectionHeading title="Visión" align="center" />
+      <p class="text-gray-600 text-lg leading-relaxed text-center">
+        Aspiramos a ser un referente artístico destacado por nuestra excelencia musical y
+        compromiso social. Deseamos representar la diversidad y riqueza multicultural de la
+        región de Valparaíso, proyectándonos nacional e internacionalmente como motor de
+        desarrollo cultural.
+      </p>
+    </div>
+  </Section>
+
+  <!-- Historia -->
+  <Section bg="white">
+    <div class="max-w-3xl mx-auto scroll-reveal">
+      <SectionHeading title="Historia" align="center" />
+      <div class="space-y-6 text-gray-600 text-lg leading-relaxed">
+        <p>
+          Los orígenes de la Orquesta Filarmónica Alimapu se remontan a <strong>2017</strong>,
+          cuando un grupo de músicos locales liderados por <strong>Danitza Villarroel</strong>
+          realizaron un concierto benéfico en el Teatro Municipal de Valparaíso para apoyar a
+          los damnificados por los devastadores incendios forestales.
+        </p>
+        <p>
+          Fundada formalmente en <strong>2019</strong>, la orquesta se consolidó como una
+          agrupación profesional que interpreta un repertorio diverso en espacios convencionales
+          y no convencionales, incluyendo teatros, iglesias, plazas y escuelas.
+        </p>
+        <p>
+          Hoy, Alimapu es un proyecto que integra una <strong>orquesta filarmónica</strong> y
+          una <strong>banda</strong>, ambas comprometidas con llevar la música a todos los
+          rincones de la región.
+        </p>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Links a sub-páginas -->
+  <Section bg="light">
+    <SectionHeading title="Conoce más" align="center" />
+    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4 max-w-4xl mx-auto">
+      {[
+        { title: 'Equipo Directivo', href: '/sobre-nosotros/equipo/', desc: 'Las personas detrás del proyecto' },
+        { title: 'Integrantes', href: '/sobre-nosotros/integrantes/', desc: 'Nuestros músicos' },
+        { title: 'Dirección', href: '/sobre-nosotros/direccion/', desc: 'Dirección musical' },
+        { title: 'Dossier', href: '/sobre-nosotros/dossier/', desc: 'Información institucional' },
+      ].map((link) => (
+        <a
+          href={link.href}
+          class="scroll-reveal group block bg-white rounded-xl shadow-sm hover:shadow-lg transition-all p-6 text-center"
+        >
+          <h3 class="font-display text-lg font-bold text-primary-950 group-hover:text-primary-700 transition-colors">
+            {link.title}
+          </h3>
+          <p class="mt-2 text-gray-600 text-sm">{link.desc}</p>
+        </a>
+      ))}
+    </div>
+  </Section>
+</BaseLayout>

@@ -1,0 +1,84 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Section from '../../components/ui/Section.astro';
+import SectionHeading from '../../components/ui/SectionHeading.astro';
+import { formatDateLong } from '../../utils/date';
+
+export async function getStaticPaths() {
+  const albums = await getCollection('galeria');
+  return albums.map((album) => ({
+    params: { slug: album.id },
+    props: album,
+  }));
+}
+
+const album = Astro.props;
+const { Content } = await render(album);
+const { data } = album;
+---
+
+<BaseLayout
+  title={data.title}
+  description={data.description || `Galería: ${data.title}`}
+>
+  <div class="bg-primary-950 pt-8 pb-12">
+    <div class="container mx-auto px-4">
+      <a href="/galeria/" class="text-accent-400 hover:text-accent-300 text-sm transition-colors mb-4 inline-block">
+        &larr; Volver a Galería
+      </a>
+      <h1 class="font-display text-3xl md:text-4xl font-bold text-white mt-2">{data.title}</h1>
+      <p class="text-gray-400 mt-2">{formatDateLong(data.date)}</p>
+    </div>
+  </div>
+
+  <Section bg="white">
+    <div class="max-w-4xl mx-auto">
+      <div class="prose prose-lg mb-10">
+        <Content />
+      </div>
+
+      {data.images && data.images.length > 0 && (
+        <div>
+          <SectionHeading title="Fotos" />
+          <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {data.images.map((img) => (
+              <div class="scroll-reveal bg-surface-50 rounded-lg overflow-hidden">
+                <div class="aspect-video bg-primary-100 flex items-center justify-center">
+                  <svg class="w-8 h-8 text-primary-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                </div>
+                {img.caption && <p class="p-3 text-sm text-gray-600">{img.caption}</p>}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {data.videos && data.videos.length > 0 && (
+        <div class="mt-12">
+          <SectionHeading title="Videos" />
+          <div class="grid gap-6 md:grid-cols-2">
+            {data.videos.map((video) => (
+              <div class="scroll-reveal">
+                <div class="aspect-video rounded-lg overflow-hidden bg-black">
+                  <iframe
+                    src={`https://www.youtube-nocookie.com/embed/${video.youtubeId}`}
+                    title={video.title}
+                    class="w-full h-full"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                    loading="lazy"
+                  />
+                </div>
+                <p class="mt-2 text-sm font-medium text-gray-700">{video.title}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  </Section>
+</BaseLayout>

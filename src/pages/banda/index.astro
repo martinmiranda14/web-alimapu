@@ -1,0 +1,81 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HeroSection from '../../components/ui/HeroSection.astro';
+import Section from '../../components/ui/Section.astro';
+import SectionHeading from '../../components/ui/SectionHeading.astro';
+import { formatDateShort } from '../../utils/date';
+
+const bandNews = await getCollection('noticias', ({ data }) => !data.draft && data.banda);
+const sortedNews = bandNews.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+const bandConcerts = await getCollection('conciertos', ({ data }) => !data.draft && data.ensemble === 'banda');
+const upcomingBand = bandConcerts
+  .filter((c) => c.data.date >= new Date())
+  .sort((a, b) => a.data.date.getTime() - b.data.date.getTime());
+---
+
+<BaseLayout
+  title="Banda Alimapu"
+  description="Conoce la Banda Alimapu, formación de vientos y percusión de la Orquesta Filarmónica Alimapu."
+>
+  <HeroSection
+    title="Banda Alimapu"
+    subtitle="Formación de vientos y percusión"
+    height="sm"
+  />
+
+  <Section bg="white">
+    <div class="max-w-3xl mx-auto scroll-reveal">
+      <p class="text-gray-600 text-lg leading-relaxed">
+        La Banda Alimapu es la formación de vientos y percusión que complementa la
+        actividad de la Orquesta Filarmónica. Con un repertorio que abarca desde marchas
+        y música festiva hasta arreglos de obras clásicas, la banda lleva la música a
+        plazas, desfiles y eventos comunitarios.
+      </p>
+    </div>
+  </Section>
+
+  {upcomingBand.length > 0 && (
+    <Section bg="light">
+      <SectionHeading title="Próximas Presentaciones" />
+      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {upcomingBand.map((concert) => (
+          <a
+            href={`/agenda/${concert.id}/`}
+            class="scroll-reveal group block bg-white rounded-xl shadow-sm hover:shadow-lg transition-all overflow-hidden"
+          >
+            <div class="bg-primary-950 p-4 text-center">
+              <p class="text-accent-400 font-display font-bold">{formatDateShort(concert.data.date)}</p>
+            </div>
+            <div class="p-6">
+              <h3 class="font-display text-lg font-bold text-primary-950 group-hover:text-primary-700 transition-colors">
+                {concert.data.title}
+              </h3>
+              <p class="mt-1 text-gray-600 text-sm">{concert.data.venue}</p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </Section>
+  )}
+
+  {sortedNews.length > 0 && (
+    <Section bg="white">
+      <SectionHeading title="Noticias de la Banda" />
+      <div class="grid gap-6 md:grid-cols-2">
+        {sortedNews.map((item) => (
+          <a
+            href={`/noticias/${item.id}/`}
+            class="scroll-reveal group block bg-surface-50 rounded-xl p-6 hover:shadow-md transition-all"
+          >
+            <p class="text-sm text-gray-500">{formatDateShort(item.data.date)}</p>
+            <h3 class="font-display text-lg font-bold text-primary-950 group-hover:text-primary-700 transition-colors mt-1">
+              {item.data.title}
+            </h3>
+          </a>
+        ))}
+      </div>
+    </Section>
+  )}
+</BaseLayout>

@@ -1,0 +1,32 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HeroSection from '../../components/ui/HeroSection.astro';
+import Section from '../../components/ui/Section.astro';
+---
+
+<BaseLayout
+  title="Dossier"
+  description="Dossier institucional de la Orquesta Filarmónica Alimapu."
+>
+  <HeroSection title="Dossier" subtitle="Información institucional" height="sm" />
+
+  <Section bg="white">
+    <div class="max-w-3xl mx-auto text-center">
+      <p class="text-gray-600 text-lg mb-8">
+        Descarga nuestro dossier para conocer en detalle nuestra historia, repertorio,
+        trayectoria y propuesta artística.
+      </p>
+      <div class="bg-surface-50 rounded-xl p-8">
+        <p class="text-gray-500 mb-4">
+          El dossier estará disponible próximamente.
+        </p>
+        <p class="text-sm text-gray-400">
+          Para solicitar información institucional, escríbenos a
+          <a href="mailto:contacto@orquestaalimapu.cl" class="text-primary-700 hover:underline">
+            contacto@orquestaalimapu.cl
+          </a>
+        </p>
+      </div>
+    </div>
+  </Section>
+</BaseLayout>

@@ -1,0 +1,49 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HeroSection from '../../components/ui/HeroSection.astro';
+import Section from '../../components/ui/Section.astro';
+import SectionHeading from '../../components/ui/SectionHeading.astro';
+
+const allMembers = await getCollection('integrantes', ({ data }) => data.isActive);
+const sortedMembers = allMembers.sort((a, b) => a.data.order - b.data.order);
+
+const sections = [
+  { key: 'direccion', label: 'Dirección' },
+  { key: 'cuerdas', label: 'Cuerdas' },
+  { key: 'maderas', label: 'Maderas' },
+  { key: 'bronces', label: 'Bronces' },
+  { key: 'percusion', label: 'Percusión' },
+] as const;
+---
+
+<BaseLayout
+  title="Integrantes"
+  description="Conoce a los músicos de la Orquesta Filarmónica Alimapu."
+>
+  <HeroSection title="Integrantes" subtitle="Nuestros músicos" height="sm" />
+
+  {sections.map((section) => {
+    const members = sortedMembers.filter((m) => m.data.section === section.key);
+    return members.length > 0 ? (
+      <Section bg={section.key === 'direccion' || section.key === 'maderas' || section.key === 'percusion' ? 'light' : 'white'}>
+        <SectionHeading title={section.label} />
+        <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {members.map((member) => (
+            <div class="scroll-reveal flex items-center gap-4 bg-white rounded-lg shadow-sm p-4">
+              <div class="w-12 h-12 rounded-full bg-primary-100 flex items-center justify-center shrink-0">
+                <span class="text-primary-700 font-bold text-sm">
+                  {member.data.name.split(' ').map(n => n[0]).join('').slice(0, 2)}
+                </span>
+              </div>
+              <div>
+                <h3 class="font-semibold text-gray-900">{member.data.name}</h3>
+                <p class="text-gray-500 text-sm">{member.data.instrument}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </Section>
+    ) : null;
+  })}
+</BaseLayout>
