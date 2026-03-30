@@ -2,6 +2,6 @@
 name: "Yasmín Parra Jorquera"
 instrument: "Violín II"
 section: "cuerdas"
-photo: "/images/integrantes/yasmin-parra.png"
+photo: "/images/integrantes/yasmin-parra.webp"
 order: 20
 ---

@@ -2,6 +2,6 @@
 name: "Valeria Oporto Quiroz"
 instrument: "Piano"
 section: "percusion"
-photo: "/images/integrantes/valeria-oporto.png"
+photo: "/images/integrantes/valeria-oporto.webp"
 order: 83
 ---
