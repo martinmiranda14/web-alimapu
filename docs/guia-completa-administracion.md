@@ -105,7 +105,7 @@ Más texto con **negrita** o *cursiva* si lo necesitas.
 | `venue`        | Sí          | Nombre del lugar                                             |
 | `venueAddress` | No          | Dirección del lugar                                          |
 | `venueMapUrl`  | No          | Link de Google Maps                                          |
-| `image`        | No          | Ruta a la imagen (ver sección "Subir imágenes")              |
+| `image`        | No          | Ruta local o link de Google Drive (ver sección "Subir imágenes") |
 | `imageAlt`     | No          | Descripción de la imagen (para accesibilidad)                |
 | `program`      | No          | Lista de obras (ver plantilla)                               |
 | `ensemble`     | Sí          | `"orquesta"`, `"banda"` o `"camara"`                         |
@@ -135,10 +135,15 @@ Ejemplo: `2026-03-nuevo-director-invitado.md`
 title: "Título de la Noticia"
 description: "Resumen corto para Google (máximo 160 caracteres)."
 date: 2026-03-15
-image: "/images/noticias/nombre-imagen.jpg"
+image: "/images/noticias/nombre-imagen.webp"
 imageAlt: "Descripción de la imagen"
 author: "Orquesta Filarmónica Alimapu"
 tags: ["etiqueta1", "etiqueta2"]
+sources:
+  - name: "Nombre del medio"
+    url: "https://ejemplo.com/noticia"
+  - name: "Otro medio"
+    url: "https://otro.com/noticia"
 banda: false
 draft: false
 ---
@@ -157,10 +162,11 @@ Más contenido con **negrita**, *cursiva* o [un enlace](https://ejemplo.com).
 | `title`       | Sí          | Título de la noticia                                         |
 | `description` | Sí          | Resumen corto (máximo 160 caracteres)                        |
 | `date`        | Sí          | Fecha de publicación: `AAAA-MM-DD`                           |
-| `image`       | No          | Ruta a la imagen                                             |
+| `image`       | No          | Ruta a la imagen o link de Google Drive                      |
 | `imageAlt`    | No          | Descripción de la imagen                                     |
 | `author`      | No          | Autor (por defecto: "Orquesta Filarmónica Alimapu")          |
 | `tags`        | No          | Etiquetas entre corchetes: `["concierto", "2026"]`           |
+| `sources`     | No          | Lista de fuentes con `name` y `url` (aparecen al final de la noticia) |
 | `banda`       | No          | `true` si es noticia de la Banda, `false` si es de la orquesta |
 | `draft`       | No          | `true` para borrador, `false` para publicar                  |
 
@@ -301,14 +307,16 @@ Ejemplo: `2026-04-concierto-otono.md`
 title: "Nombre del Evento"
 description: "Descripción corta del álbum."
 date: 2026-04-19
-coverImage: "/images/galeria/nombre-cover.jpg"
+coverImage: "https://drive.google.com/file/d/ID_DE_LA_FOTO/view?usp=sharing"
 coverImageAlt: "Descripción de la imagen de portada"
 images:
-  - src: "/images/galeria/foto1.jpg"
+  - src: "https://drive.google.com/file/d/ID_FOTO_1/view?usp=sharing"
     alt: "Descripción de la foto 1"
     caption: "Texto que aparece debajo de la foto (opcional)"
-  - src: "/images/galeria/foto2.jpg"
+  - src: "https://drive.google.com/file/d/ID_FOTO_2/view?usp=sharing"
     alt: "Descripción de la foto 2"
+  - src: "/images/galeria/foto-local.webp"
+    alt: "También se puede usar una imagen local"
 videos:
   - youtubeId: "XXXXXXXXXXX"
     title: "Título del video"
@@ -317,6 +325,8 @@ tags: ["concierto", "2026"]
 
 Texto libre describiendo el evento fotografiado.
 ```
+
+> **Nota:** Puedes mezclar imágenes de Google Drive con imágenes locales en el mismo álbum.
 
 ### Cómo obtener el ID de un video de YouTube
 
@@ -328,7 +338,40 @@ Es la parte después de `v=`.
 
 ## Subir imágenes
 
-### Paso 1: Ir a la carpeta de imágenes
+Hay dos formas de usar imágenes en el sitio: **subirlas al repositorio** o **usar un link de Google Drive**.
+
+### Opción A: Link de Google Drive (recomendado para galerías)
+
+Puedes usar directamente el link de compartir de Google Drive. Solo necesitas que la imagen esté compartida como **"Cualquier persona con el enlace"**.
+
+#### Cómo hacerlo
+
+1. Sube la foto a Google Drive
+2. Clic derecho → **"Compartir"** → cambia a **"Cualquier persona con el enlace"**
+3. Copia el link (se ve así: `https://drive.google.com/file/d/ABC123XYZ/view?usp=sharing`)
+4. Pega el link directamente en el campo de imagen del archivo `.md`
+
+#### Ejemplo en un archivo de galería
+
+```yaml
+images:
+  - src: "https://drive.google.com/file/d/ABC123XYZ/view?usp=sharing"
+    alt: "Descripción de la foto"
+  - src: "https://drive.google.com/file/d/DEF456UVW/view?usp=sharing"
+    alt: "Otra foto"
+```
+
+#### Ejemplo en una noticia
+
+```yaml
+image: "https://drive.google.com/file/d/ABC123XYZ/view?usp=sharing"
+```
+
+Esto funciona en **todas** las secciones: noticias, conciertos, galería, integrantes y equipo directivo.
+
+> **IMPORTANTE: Google Photos NO funciona.** Los links de Google Photos (`photos.google.com` o `photos.fife.usercontent.google.com`) requieren autenticación y no se pueden mostrar públicamente en el sitio. Usa siempre **Google Drive** para compartir imágenes por link.
+
+### Opción B: Subir al repositorio (recomendado para fotos de músicos)
 
 Navega a `public/images/` en el repositorio. Usa la subcarpeta correspondiente:
 
@@ -340,19 +383,25 @@ Navega a `public/images/` en el repositorio. Usa la subcarpeta correspondiente:
 | Fotos del equipo    | `public/images/equipo/`        |
 | Fotos de galería    | `public/images/galeria/`       |
 
-### Paso 2: Subir
+#### Pasos
 
 1. Haz clic en **"Add file"** → **"Upload files"**
 2. Arrastra las imágenes o haz clic en "choose your files"
 3. Haz clic en **"Commit changes"**
 
+#### En el archivo `.md`, usa la ruta local
+
+```yaml
+image: "/images/noticias/concierto-navidad.webp"
+```
+
 ### Recomendaciones para imágenes
 
-- **Formato**: JPG o PNG (JPG es más liviano)
-- **Tamaño fotos de músicos**: 400x400 px (cuadrada)
-- **Tamaño fotos de conciertos/noticias**: 1200x675 px (16:9)
+- **Formato**: WebP o JPG (WebP es más liviano)
+- **Tamaño fotos de músicos**: 200x200 px (cuadrada)
+- **Tamaño fotos de conciertos/noticias**: 1200px de ancho
 - **Peso máximo recomendado**: 500 KB por imagen
-- **Nombres de archivo**: minúsculas, sin tildes, sin espacios. Usar guiones. Ejemplo: `concierto-navidad-2025.jpg`
+- **Nombres de archivo**: minúsculas, sin tildes, sin espacios. Usar guiones. Ejemplo: `concierto-navidad-2025.webp`
 
 ### Crear carpetas nuevas
 
