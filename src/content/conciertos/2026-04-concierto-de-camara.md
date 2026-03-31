@@ -1,8 +1,8 @@
 ---
 title: "Concierto de Cámara 2026"
 description: "Concierto de cámara con obras de Debussy, Quantz, Telemann y más, interpretadas por integrantes de la Orquesta Alimapu."
-date: 2026-04-12
-time: "19:30"
+date: 2026-04-09
+time: "19:00"
 endTime: "21:00"
 venue: "Espacio IPA"
 venueAddress: "Condell, Valparaíso"
