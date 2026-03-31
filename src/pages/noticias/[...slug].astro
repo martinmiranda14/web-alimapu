@@ -71,8 +71,42 @@ const schemas = [
   </div>
 
   <Section bg="white">
-    <article class="prose prose-lg max-w-3xl">
-      <Content />
-    </article>
+    {data.image ? (
+      <div class="max-w-3xl mx-auto">
+        <img
+          src={data.image}
+          alt={data.imageAlt || data.title}
+          class="w-full rounded-xl shadow-sm mb-8"
+          loading="lazy"
+        />
+        <article class="prose prose-lg">
+          <Content />
+        </article>
+      </div>
+    ) : (
+      <article class="prose prose-lg max-w-3xl mx-auto">
+        <Content />
+      </article>
+    )}
+
+    {data.sources && data.sources.length > 0 && (
+      <div class="max-w-3xl mx-auto mt-10 pt-6 border-t border-gray-200">
+        <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">Fuentes</h3>
+        <ul class="space-y-1">
+          {data.sources.map((source) => (
+            <li>
+              <a
+                href={source.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-primary-700 hover:text-primary-900 text-sm hover:underline"
+              >
+                {source.name} &rarr;
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
   </Section>
 </BaseLayout>

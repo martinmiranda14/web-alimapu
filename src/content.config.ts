@@ -15,6 +15,10 @@ const noticias = defineCollection({
     tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
     banda: z.boolean().default(false),
+    sources: z.array(z.object({
+      name: z.string(),
+      url: z.string().url(),
+    })).optional(),
   }),
 });
 
