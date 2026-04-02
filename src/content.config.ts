@@ -126,6 +126,8 @@ const paginas = defineCollection({
       )
       .optional(),
     futureText: z.string().optional(),
+    mision: z.string().optional(),
+    vision: z.string().optional(),
   }),
 });
 

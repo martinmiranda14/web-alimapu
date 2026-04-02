@@ -9,6 +9,9 @@ import { breadcrumbSchema } from '../../utils/schema';
 const pages = await getCollection('paginas');
 const historia = pages.find((p) => p.id === 'historia');
 const resumen = historia?.data.resumen || [];
+const sobreNosotros = pages.find((p) => p.id === 'sobre-nosotros');
+const mision = sobreNosotros?.data.mision || '';
+const vision = sobreNosotros?.data.vision || '';
 
 const schema = breadcrumbSchema([
   { name: 'Inicio', url: 'https://orquestaalimapu.cl/' },
@@ -32,9 +35,7 @@ const schema = breadcrumbSchema([
     <div class="max-w-3xl mx-auto scroll-reveal">
       <SectionHeading title="Misión" align="center" />
       <p class="text-gray-600 text-lg leading-relaxed text-center">
-        Somos una agrupación profesional, autogestionada y autónoma, comprometida con el
-        desarrollo humano y cultural de la región de Valparaíso. Buscamos transformar los
-        paradigmas tradicionales, promoviendo la inclusión y el acceso universal a la música clásica.
+        {mision}
       </p>
     </div>
   </Section>
@@ -44,10 +45,7 @@ const schema = breadcrumbSchema([
     <div class="max-w-3xl mx-auto scroll-reveal">
       <SectionHeading title="Visión" align="center" />
       <p class="text-gray-600 text-lg leading-relaxed text-center">
-        Aspiramos a ser un referente artístico destacado por nuestra excelencia musical y
-        compromiso social. Deseamos representar la diversidad y riqueza multicultural de la
-        región de Valparaíso, proyectándonos nacional e internacionalmente como motor de
-        desarrollo cultural.
+        {vision}
       </p>
     </div>
   </Section>

@@ -37,6 +37,7 @@ Tú editas un archivo .md en GitHub → GitHub lo detecta → Se regenera el sit
 | Audiciones         | `src/content/audiciones/`            |
 | Galería            | `src/content/galeria/`               |
 | Imágenes           | `public/images/`                     |
+| Páginas (misión, visión, historia) | `src/content/paginas/`  |
 
 ### Cómo acceder
 
@@ -327,6 +328,34 @@ Texto libre describiendo el evento fotografiado.
 ```
 
 > **Nota:** Puedes mezclar imágenes de Google Drive con imágenes locales en el mismo álbum.
+
+---
+
+## Editar la Misión y Visión
+
+### Archivo: `src/content/paginas/sobre-nosotros.md`
+
+Este archivo contiene la misión y visión que se muestran en la página "Sobre Nosotros". Se puede editar directamente desde GitHub.
+
+### Ejemplo
+
+```yaml
+---
+title: "Sobre Nosotros"
+description: "Conoce la historia, misión y visión de la Orquesta Filarmónica Alimapu."
+mision: "Texto de la misión aquí."
+vision: "Texto de la visión aquí."
+---
+```
+
+### Referencia de campos
+
+| Campo         | Obligatorio | Qué poner                                         |
+| ------------- | ----------- | -------------------------------------------------- |
+| `title`       | Sí          | Título de la página                                |
+| `description` | Sí          | Resumen corto para Google (máximo 160 caracteres)  |
+| `mision`      | No          | Texto de la misión de la orquesta                  |
+| `vision`      | No          | Texto de la visión de la orquesta                  |
 
 ---
 
