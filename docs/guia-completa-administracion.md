@@ -197,13 +197,31 @@ bio: "Descripción corta (opcional)."
 
 ### Opciones para `section`
 
-| Valor         | Se muestra como |
-| ------------- | --------------- |
-| `"direccion"` | Dirección       |
-| `"cuerdas"`   | Cuerdas         |
-| `"maderas"`   | Maderas         |
-| `"bronces"`   | Bronces         |
-| `"percusion"` | Percusión       |
+| Valor         | Se muestra como                          |
+| ------------- | ---------------------------------------- |
+| `"direccion"` | Dirección (aparece en `/sobre-nosotros/direccion/`, no en integrantes) |
+| `"cuerdas"`   | Cuerdas                                  |
+| `"maderas"`   | Maderas                                  |
+| `"bronces"`   | Bronces                                  |
+| `"percusion"` | Percusión                                |
+
+### Campos especiales para directores (`section: "direccion"`)
+
+| Campo      | Qué hace                                                         |
+| ---------- | ---------------------------------------------------------------- |
+| `featured` | Si es `true`, aparece destacado como "Directora/Director Principal" con foto grande y bio visible. Los demás aparecen en la sección "Directores Asistentes" |
+
+### Bio con múltiples párrafos
+
+Para que la bio tenga párrafos separados, usa el formato `|` de YAML:
+
+```yaml
+bio: |
+    Primer párrafo de la biografía.
+    Segundo párrafo con más información.
+```
+
+> **Importante:** Usa `|` (barra vertical) seguido de salto de línea, e indenta cada línea con 4 espacios. Cada línea será un párrafo separado.
 
 ### Sobre el campo `order`
 

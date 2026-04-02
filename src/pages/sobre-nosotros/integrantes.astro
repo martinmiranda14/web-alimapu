@@ -6,7 +6,7 @@ import Section from '../../components/ui/Section.astro';
 import SectionHeading from '../../components/ui/SectionHeading.astro';
 import { assetPath } from '../../utils/paths';
 
-const allMembers = await getCollection('integrantes', ({ data }) => data.isActive);
+const allMembers = await getCollection('integrantes', ({ data }) => data.isActive && data.section !== 'direccion');
 const sortedMembers = allMembers.sort((a, b) => a.data.order - b.data.order);
 
 const featuredMember = sortedMembers.find((m) => m.data.featured);
@@ -52,57 +52,13 @@ const sections = [
             </h3>
             <p class="text-accent-600 font-medium mt-1">{featuredMember.data.instrument}</p>
             {featuredMember.data.bio && (
-              <p class="text-gray-600 mt-4 leading-relaxed">{featuredMember.data.bio}</p>
+              <div class="text-gray-600 mt-4 leading-relaxed space-y-3" set:html={featuredMember.data.bio.split('\n').map(p => `<p>${p}</p>`).join('')} />
             )}
           </div>
         </div>
       </div>
     </Section>
   )}
-
-  <!-- Dirección Musical -->
-  {(() => {
-    const directors = regularMembers.filter((m) => m.data.section === 'direccion');
-    return directors.length > 0 ? (
-      <Section bg="light">
-        <SectionHeading title="Dirección Musical" />
-        <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {directors.map((member) => (
-            <button
-              class="member-card scroll-reveal flex items-center gap-4 bg-white rounded-lg shadow-sm p-4 w-full text-left cursor-pointer hover:shadow-md hover:scale-[1.02] transition-all duration-200"
-              data-name={member.data.name}
-              data-instrument={member.data.instrument}
-              data-section="Dirección Musical"
-              data-photo={member.data.photo ? assetPath(member.data.photo) : ''}
-              data-bio={member.data.bio || ''}
-              data-featured={member.data.featured ? 'true' : ''}
-              data-photo-position={member.data.photoPosition || ''}
-            >
-              {member.data.photo ? (
-                <img
-                  src={assetPath(member.data.photo)}
-                  alt={member.data.name}
-                  class="w-12 h-12 rounded-full object-cover shrink-0"
-                  style={member.data.photoPosition ? `object-position: ${member.data.photoPosition}` : ''}
-                  loading="lazy"
-                />
-              ) : (
-                <div class="w-12 h-12 rounded-full bg-primary-100 flex items-center justify-center shrink-0">
-                  <span class="text-primary-700 font-bold text-sm">
-                    {member.data.name.split(' ').map(n => n[0]).join('').slice(0, 2)}
-                  </span>
-                </div>
-              )}
-              <div>
-                <h3 class="font-semibold text-gray-900">{member.data.name}</h3>
-                <p class="text-gray-500 text-sm">{member.data.instrument}</p>
-              </div>
-            </button>
-          ))}
-        </div>
-      </Section>
-    ) : null;
-  })()}
 
   <!-- Secciones instrumentales -->
   {sections.map((section, i) => {
@@ -163,7 +119,7 @@ const sections = [
         <p id="modal-instrument" class="text-accent-600 font-medium mt-1"></p>
         <span id="modal-section" class="inline-block mt-2 px-3 py-1 bg-primary-50 text-primary-700 text-sm rounded-full"></span>
         <span id="modal-featured-badge" class="hidden mt-2 px-3 py-1 bg-accent-50 text-accent-700 text-sm rounded-full font-medium">Concertino</span>
-        <p id="modal-bio" class="text-gray-600 mt-4 leading-relaxed text-sm hidden"></p>
+        <div id="modal-bio" class="text-gray-600 mt-4 leading-relaxed text-sm hidden space-y-2"></div>
       </div>
     </div>
   </div>
@@ -211,7 +167,7 @@ const sections = [
         }
 
         if (bio) {
-          bioEl!.textContent = bio;
+          bioEl!.innerHTML = bio.split('\n').map((p: string) => `<p>${p}</p>`).join('');
           bioEl!.classList.remove('hidden');
         } else {
           bioEl!.classList.add('hidden');

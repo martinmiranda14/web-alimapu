@@ -1,39 +1,197 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import HeroSection from '../../components/ui/HeroSection.astro';
 import Section from '../../components/ui/Section.astro';
+import SectionHeading from '../../components/ui/SectionHeading.astro';
+import { assetPath } from '../../utils/paths';
+
+const allMembers = await getCollection('integrantes', ({ data }) => data.isActive && data.section === 'direccion');
+const directors = allMembers.sort((a, b) => a.data.order - b.data.order);
+const featuredDirector = directors.find((m) => m.data.featured);
+const otherDirectors = directors.filter((m) => !m.data.featured);
 ---
 
 <BaseLayout
   title="Dirección Musical"
-  description="Conoce a la directora musical de la Orquesta Filarmónica Alimapu."
+  description="Conoce al equipo de dirección musical de la Orquesta Filarmónica Alimapu."
 >
   <HeroSection title="Dirección Musical" height="sm" />
 
-  <Section bg="white">
-    <div class="max-w-3xl mx-auto">
-      <div class="flex flex-col md:flex-row gap-8 items-start">
-        <div class="w-48 h-48 rounded-2xl bg-primary-100 flex items-center justify-center shrink-0 mx-auto md:mx-0">
-          <span class="text-primary-700 font-display text-4xl font-bold">DV</span>
-        </div>
-        <div>
-          <h2 class="font-display text-3xl font-bold text-primary-950">Danitza Villarroel Orrego</h2>
-          <p class="text-accent-600 font-medium mt-1">Directora Musical y Fundadora</p>
-          <div class="mt-6 space-y-4 text-gray-600 leading-relaxed">
-            <p>
-              Músico y gestora cultural, Danitza Villarroel es la líder y fundadora del
-              proyecto Alimapu desde sus inicios en 2017, cuando organizó un concierto
-              benéfico en el Teatro Municipal de Valparaíso en apoyo a los damnificados
-              por incendios forestales.
-            </p>
-            <p>
-              Bajo su dirección, la Orquesta Filarmónica Alimapu se ha consolidado como
-              una agrupación profesional comprometida con el desarrollo cultural de la
-              región de Valparaíso.
-            </p>
+  {featuredDirector && (
+    <Section bg="white">
+      <SectionHeading title="Directora Principal" />
+      <div class="max-w-3xl mx-auto scroll-reveal">
+        <div class="flex flex-col md:flex-row items-center gap-8 bg-surface-50 rounded-2xl p-8">
+          {featuredDirector.data.photo ? (
+            <img
+              src={assetPath(featuredDirector.data.photo)}
+              alt={featuredDirector.data.name}
+              class="w-40 h-40 rounded-full object-cover shrink-0 shadow-lg"
+              style={featuredDirector.data.photoPosition ? `object-position: ${featuredDirector.data.photoPosition}` : ''}
+            />
+          ) : (
+            <div class="w-40 h-40 rounded-full bg-primary-100 flex items-center justify-center shrink-0 shadow-lg">
+              <span class="text-primary-700 font-bold text-4xl">
+                {featuredDirector.data.name.split(' ').map(n => n[0]).join('').slice(0, 2)}
+              </span>
+            </div>
+          )}
+          <div class="text-center md:text-left">
+            <h3 class="font-display text-2xl font-bold text-primary-950">
+              {featuredDirector.data.name}
+            </h3>
+            <p class="text-accent-600 font-medium mt-1">{featuredDirector.data.instrument}</p>
+            {featuredDirector.data.bio && (
+              <div class="text-gray-600 mt-4 leading-relaxed space-y-3" set:html={featuredDirector.data.bio.split('\n').map(p => `<p>${p}</p>`).join('')} />
+            )}
           </div>
         </div>
       </div>
+    </Section>
+  )}
+
+  {otherDirectors.length > 0 && (
+    <Section bg="light">
+      <SectionHeading title="Directores Asistentes" />
+      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {otherDirectors.map((member) => (
+          <button
+            class="member-card scroll-reveal flex items-center gap-4 bg-white rounded-lg shadow-sm p-6 w-full text-left cursor-pointer hover:shadow-md hover:scale-[1.02] transition-all duration-200"
+            data-name={member.data.name}
+            data-instrument={member.data.instrument}
+            data-section="Dirección Musical"
+            data-photo={member.data.photo ? assetPath(member.data.photo) : ''}
+            data-bio={member.data.bio || ''}
+            data-featured={member.data.featured ? 'true' : ''}
+            data-photo-position={member.data.photoPosition || ''}
+          >
+            {member.data.photo ? (
+              <img
+                src={assetPath(member.data.photo)}
+                alt={member.data.name}
+                class="w-16 h-16 rounded-full object-cover shrink-0"
+                style={member.data.photoPosition ? `object-position: ${member.data.photoPosition}` : ''}
+                loading="lazy"
+              />
+            ) : (
+              <div class="w-16 h-16 rounded-full bg-primary-100 flex items-center justify-center shrink-0">
+                <span class="text-primary-700 font-bold text-lg">
+                  {member.data.name.split(' ').map(n => n[0]).join('').slice(0, 2)}
+                </span>
+              </div>
+            )}
+            <div>
+              <h3 class="font-display text-lg font-bold text-primary-950">{member.data.name}</h3>
+              <p class="text-accent-600 text-sm font-medium">{member.data.instrument}</p>
+            </div>
+          </button>
+        ))}
+      </div>
+    </Section>
+  )}
+
+  <!-- Modal -->
+  <div id="member-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4">
+    <div id="modal-backdrop" class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+    <div id="modal-content" class="relative bg-white rounded-2xl shadow-2xl max-w-md w-full p-8 transform scale-95 opacity-0 transition-all duration-300">
+      <button id="modal-close" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 transition-colors" aria-label="Cerrar">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+      <div class="flex flex-col items-center text-center">
+        <div id="modal-photo-container"></div>
+        <h3 id="modal-name" class="font-display text-2xl font-bold text-primary-950 mt-4"></h3>
+        <p id="modal-instrument" class="text-accent-600 font-medium mt-1"></p>
+        <span id="modal-section" class="inline-block mt-2 px-3 py-1 bg-primary-50 text-primary-700 text-sm rounded-full"></span>
+        <span id="modal-featured-badge" class="hidden mt-2 px-3 py-1 bg-accent-50 text-accent-700 text-sm rounded-full font-medium">Directora Principal</span>
+        <div id="modal-bio" class="text-gray-600 mt-4 leading-relaxed text-sm hidden space-y-2"></div>
+      </div>
     </div>
-  </Section>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const modal = document.getElementById('member-modal');
+      const backdrop = document.getElementById('modal-backdrop');
+      const content = document.getElementById('modal-content');
+      const closeBtn = document.getElementById('modal-close');
+      const photoContainer = document.getElementById('modal-photo-container');
+      const nameEl = document.getElementById('modal-name');
+      const instrumentEl = document.getElementById('modal-instrument');
+      const sectionEl = document.getElementById('modal-section');
+      const featuredBadge = document.getElementById('modal-featured-badge');
+      const bioEl = document.getElementById('modal-bio');
+
+      if (!modal) return;
+
+      function openModal(card: HTMLElement) {
+        const name = card.dataset.name || '';
+        const instrument = card.dataset.instrument || '';
+        const section = card.dataset.section || '';
+        const photo = card.dataset.photo || '';
+        const bio = card.dataset.bio || '';
+        const featured = card.dataset.featured === 'true';
+        const photoPosition = card.dataset.photoPosition || '';
+
+        nameEl!.textContent = name;
+        instrumentEl!.textContent = instrument;
+        sectionEl!.textContent = section;
+
+        if (photo) {
+          const posStyle = photoPosition ? ` style="object-position: ${photoPosition}"` : '';
+          photoContainer!.innerHTML = `<img src="${photo}" alt="${name}" class="w-32 h-32 rounded-full object-cover shadow-lg"${posStyle} />`;
+        } else {
+          const initials = name.split(' ').map((n: string) => n[0]).join('').slice(0, 2);
+          photoContainer!.innerHTML = `<div class="w-32 h-32 rounded-full bg-primary-100 flex items-center justify-center shadow-lg"><span class="text-primary-700 font-bold text-3xl">${initials}</span></div>`;
+        }
+
+        if (featured) {
+          featuredBadge!.classList.remove('hidden');
+        } else {
+          featuredBadge!.classList.add('hidden');
+        }
+
+        if (bio) {
+          bioEl!.innerHTML = bio.split('\n').map((p: string) => `<p>${p}</p>`).join('');
+          bioEl!.classList.remove('hidden');
+        } else {
+          bioEl!.classList.add('hidden');
+        }
+
+        modal!.classList.remove('hidden');
+        modal!.classList.add('flex');
+        document.body.style.overflow = 'hidden';
+
+        requestAnimationFrame(() => {
+          content!.classList.remove('scale-95', 'opacity-0');
+          content!.classList.add('scale-100', 'opacity-100');
+        });
+      }
+
+      function closeModal() {
+        content!.classList.remove('scale-100', 'opacity-100');
+        content!.classList.add('scale-95', 'opacity-0');
+        setTimeout(() => {
+          modal!.classList.add('hidden');
+          modal!.classList.remove('flex');
+          document.body.style.overflow = '';
+        }, 200);
+      }
+
+      document.querySelectorAll('.member-card').forEach((card) => {
+        card.addEventListener('click', () => openModal(card as HTMLElement));
+      });
+
+      closeBtn?.addEventListener('click', closeModal);
+      backdrop?.addEventListener('click', closeModal);
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !modal!.classList.contains('hidden')) {
+          closeModal();
+        }
+      });
+    });
+  </script>
 </BaseLayout>
