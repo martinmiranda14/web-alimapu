@@ -1,0 +1,78 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HeroSection from '../../components/ui/HeroSection.astro';
+import Section from '../../components/ui/Section.astro';
+import { breadcrumbSchema } from '../../utils/schema';
+
+const pages = await getCollection('paginas');
+const historia = pages.find((p) => p.id === 'historia');
+if (!historia) throw new Error('No se encontró la página de historia');
+
+const { Content } = await render(historia);
+const { data } = historia;
+const hitos = data.hitos || [];
+
+const schema = breadcrumbSchema([
+  { name: 'Inicio', url: 'https://orquestaalimapu.cl/' },
+  { name: 'Sobre Nosotros', url: 'https://orquestaalimapu.cl/sobre-nosotros/' },
+  { name: 'Historia', url: 'https://orquestaalimapu.cl/sobre-nosotros/historia/' },
+]);
+---
+
+<BaseLayout
+  title={data.title}
+  description={data.description}
+  schema={schema}
+>
+  <HeroSection
+    title={data.title}
+    subtitle={data.subtitle}
+    height="sm"
+  />
+
+  <Section bg="white">
+    <div class="max-w-3xl mx-auto">
+      <div class="prose prose-lg mx-auto text-center mb-12 scroll-reveal">
+        <Content />
+      </div>
+
+      {hitos.length > 0 && (
+        <div class="relative">
+          <div class="absolute left-6 md:left-1/2 top-0 bottom-0 w-0.5 bg-primary-200 -translate-x-1/2"></div>
+
+          {hitos.map((hito, i) => (
+            <div class={`scroll-reveal relative flex flex-col md:flex-row gap-4 md:gap-8 mb-12 ${i % 2 === 0 ? 'md:flex-row-reverse' : ''}`}>
+              <div class="absolute left-6 md:left-1/2 -translate-x-1/2 w-12 h-12 bg-primary-950 rounded-full flex items-center justify-center z-10 shadow-lg">
+                <span class="text-white text-xs font-bold">{hito.year.slice(0, 4)}</span>
+              </div>
+              <div class="hidden md:block md:w-1/2"></div>
+              <div class="ml-16 md:ml-0 md:w-1/2">
+                <div class="bg-surface-50 rounded-xl p-6 shadow-sm">
+                  <span class="text-accent-600 font-bold text-sm">{hito.year}</span>
+                  <h3 class="font-display text-xl font-bold text-primary-950 mt-1">{hito.title}</h3>
+                  <p class="text-gray-600 mt-3 leading-relaxed">{hito.description}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  </Section>
+
+  {data.futureText && (
+    <Section bg="light">
+      <div class="max-w-3xl mx-auto text-center scroll-reveal">
+        <h2 class="font-display text-2xl font-bold text-primary-950 mb-4">El futuro</h2>
+        <p class="text-gray-600 text-lg leading-relaxed">{data.futureText}</p>
+        <a
+          href={`${import.meta.env.BASE_URL}sobre-nosotros/`}
+          class="inline-block mt-6 text-accent-600 hover:text-accent-500 font-medium transition-colors"
+        >
+          &larr; Volver a Sobre Nosotros
+        </a>
+      </div>
+    </Section>
+  )}
+</BaseLayout>

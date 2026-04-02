@@ -1,9 +1,14 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import HeroSection from '../../components/ui/HeroSection.astro';
 import Section from '../../components/ui/Section.astro';
 import SectionHeading from '../../components/ui/SectionHeading.astro';
 import { breadcrumbSchema } from '../../utils/schema';
+
+const pages = await getCollection('paginas');
+const historia = pages.find((p) => p.id === 'historia');
+const resumen = historia?.data.resumen || [];
 
 const schema = breadcrumbSchema([
   { name: 'Inicio', url: 'https://orquestaalimapu.cl/' },
@@ -52,22 +57,17 @@ const schema = breadcrumbSchema([
     <div class="max-w-3xl mx-auto scroll-reveal">
       <SectionHeading title="Historia" align="center" />
       <div class="space-y-6 text-gray-600 text-lg leading-relaxed">
-        <p>
-          Los orígenes de la Orquesta Filarmónica Alimapu se remontan a <strong>2017</strong>,
-          cuando un grupo de músicos locales liderados por <strong>Danitza Villarroel</strong>
-          realizaron un concierto benéfico en el Teatro Municipal de Valparaíso para apoyar a
-          los damnificados por los devastadores incendios forestales.
-        </p>
-        <p>
-          Fundada formalmente en <strong>2019</strong>, la orquesta se consolidó como una
-          agrupación profesional que interpreta un repertorio diverso en espacios convencionales
-          y no convencionales, incluyendo teatros, iglesias, plazas y escuelas.
-        </p>
-        <p>
-          Hoy, Alimapu es un proyecto que integra una <strong>orquesta filarmónica</strong> y
-          una <strong>banda</strong>, ambas comprometidas con llevar la música a todos los
-          rincones de la región.
-        </p>
+        {resumen.map((parrafo) => (
+          <p set:html={parrafo.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')} />
+        ))}
+      </div>
+      <div class="mt-6 text-center">
+        <a
+          href={`${import.meta.env.BASE_URL}sobre-nosotros/historia/`}
+          class="text-accent-600 hover:text-accent-500 font-medium transition-colors"
+        >
+          Conocer nuestra historia completa &rarr;
+        </a>
       </div>
     </div>
   </Section>
@@ -77,6 +77,7 @@ const schema = breadcrumbSchema([
     <SectionHeading title="Conoce más" align="center" />
     <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4 max-w-4xl mx-auto">
       {[
+        { title: 'Historia', href: `${import.meta.env.BASE_URL}sobre-nosotros/historia/`, desc: 'Nuestro recorrido desde 2017' },
         { title: 'Equipo Directivo', href: `${import.meta.env.BASE_URL}sobre-nosotros/equipo/`, desc: 'Las personas detrás del proyecto' },
         { title: 'Integrantes', href: `${import.meta.env.BASE_URL}sobre-nosotros/integrantes/`, desc: 'Nuestros músicos' },
         { title: 'Dirección', href: `${import.meta.env.BASE_URL}sobre-nosotros/direccion/`, desc: 'Dirección musical' },

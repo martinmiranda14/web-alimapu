@@ -109,6 +109,26 @@ const galeria = defineCollection({
   }),
 });
 
+const paginas = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/paginas' }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string().max(160),
+    subtitle: z.string().optional(),
+    resumen: z.array(z.string()).optional(),
+    hitos: z
+      .array(
+        z.object({
+          year: z.string(),
+          title: z.string(),
+          description: z.string(),
+        })
+      )
+      .optional(),
+    futureText: z.string().optional(),
+  }),
+});
+
 const audiciones = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/audiciones' }),
   schema: z.object({
@@ -132,4 +152,5 @@ export const collections = {
   'equipo-directivo': equipoDirectivo,
   galeria,
   audiciones,
+  paginas,
 };

@@ -328,6 +328,46 @@ Texto libre describiendo el evento fotografiado.
 
 > **Nota:** Puedes mezclar imágenes de Google Drive con imágenes locales en el mismo álbum.
 
+---
+
+## Editar la Historia de la orquesta
+
+### Archivo: `src/content/paginas/historia.md`
+
+Este archivo contiene toda la información de la página de Historia. Se puede editar directamente desde GitHub.
+
+### Qué se puede cambiar
+
+- **Título y subtítulo** de la página
+- **Texto introductorio** (el cuerpo del archivo Markdown, debajo del `---`)
+- **Hitos de la línea de tiempo**: agregar, editar o eliminar eventos históricos
+- **Texto de futuro**: el párrafo final sobre la visión a futuro
+
+### Cómo agregar un nuevo hito
+
+Agrega un nuevo bloque dentro de `hitos:`, respetando el formato:
+
+```yaml
+hitos:
+  - year: "2025"
+    title: "Título del hito"
+    description: "Descripción de lo que pasó ese año."
+```
+
+> **Importante:** Respetar la indentación (2 espacios). Cada campo de un hito va con 4 espacios de indentación.
+
+### Referencia de campos
+
+| Campo         | Obligatorio | Qué poner                                     |
+| ------------- | ----------- | --------------------------------------------- |
+| `title`       | Sí          | Título de la página                           |
+| `description` | Sí          | Resumen corto para Google (máximo 160 caracteres) |
+| `subtitle`    | No          | Subtítulo que aparece en el hero              |
+| `hitos`       | No          | Lista de hitos (ver formato arriba)           |
+| `futureText`  | No          | Texto de la sección "El futuro"               |
+
+---
+
 ### Cómo obtener el ID de un video de YouTube
 
 De la URL `https://www.youtube.com/watch?v=dQw4w9WgXcQ`, el ID es: `dQw4w9WgXcQ`
