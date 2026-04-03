@@ -4,4 +4,5 @@ instrument: "Percusión"
 section: "percusion"
 order: 101
 photo: "https://drive.google.com/file/d/1RqEgHThmlIxF7PNqo9c6AoVYJ6WHNLcH/view?usp=sharing"
+bio: "Percusionista de la Filarmónica Alimapu desde 2021. Maneja diversos instrumentos de percusión sinfónica con versatilidad."
 ---
