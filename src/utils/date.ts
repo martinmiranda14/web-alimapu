@@ -9,17 +9,17 @@ const DAYS_ES = [
 ];
 
 export function formatDateLong(date: Date): string {
-  const day = date.getDate();
-  const month = MONTHS_ES[date.getMonth()];
-  const year = date.getFullYear();
-  const weekday = DAYS_ES[date.getDay()];
+  const day = date.getUTCDate();
+  const month = MONTHS_ES[date.getUTCMonth()];
+  const year = date.getUTCFullYear();
+  const weekday = DAYS_ES[date.getUTCDay()];
   return `${weekday} ${day} de ${month} de ${year}`;
 }
 
 export function formatDateShort(date: Date): string {
-  const day = date.getDate();
-  const month = MONTHS_ES[date.getMonth()];
-  const year = date.getFullYear();
+  const day = date.getUTCDate();
+  const month = MONTHS_ES[date.getUTCMonth()];
+  const year = date.getUTCFullYear();
   return `${day} de ${month}, ${year}`;
 }
 

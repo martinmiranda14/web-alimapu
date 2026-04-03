@@ -7,18 +7,8 @@ import SectionHeading from '../../components/ui/SectionHeading.astro';
 import { breadcrumbSchema } from '../../utils/schema';
 import { formatDateLong } from '../../utils/date';
 
-const today = new Date();
-
 const allConcerts = await getCollection('conciertos', ({ data }) => !data.draft && !data.isCancelled);
-
-const upcoming = allConcerts
-  .filter((c) => c.data.date >= today)
-  .sort((a, b) => a.data.date.getTime() - b.data.date.getTime());
-
-const past = allConcerts
-  .filter((c) => c.data.date < today)
-  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
-  .slice(0, 6);
+const concerts = allConcerts.sort((a, b) => a.data.date.getTime() - b.data.date.getTime());
 
 const schema = breadcrumbSchema([
   { name: 'Inicio', url: 'https://orquestaalimapu.cl/' },
@@ -33,21 +23,21 @@ const schema = breadcrumbSchema([
 >
   <HeroSection
     title="Agenda"
-    subtitle="Próximos conciertos y presentaciones"
+    subtitle="Conciertos y presentaciones"
     height="sm"
   />
 
-  <!-- Próximos Conciertos -->
   <Section bg="light">
-    <SectionHeading title="Próximos Conciertos" />
-    {upcoming.length > 0 ? (
+    <SectionHeading title="Conciertos" />
+    {concerts.length > 0 ? (
       <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-        {upcoming.map((concert) => (
+        {concerts.map((concert) => (
           <a
             href={`${import.meta.env.BASE_URL}agenda/${concert.id}/`}
             class="scroll-reveal group block bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden"
+            data-concert-card={concert.data.date.toISOString().split('T')[0]}
           >
-            <div class="bg-primary-950 p-4 text-center">
+            <div class="bg-primary-950 p-4 text-center relative" data-concert-date={concert.data.date.toISOString().split('T')[0]}>
               <p class="text-accent-400 font-display text-lg font-bold">
                 {formatDateLong(concert.data.date)}
               </p>
@@ -73,7 +63,7 @@ const schema = breadcrumbSchema([
                   ))}
                 </div>
               )}
-              <div class="mt-4 flex gap-2">
+              <div class="mt-4 flex flex-wrap gap-2">
                 {concert.data.isFree ? (
                   <span class="bg-green-100 text-green-800 text-xs font-medium px-2 py-1 rounded">
                     Entrada Liberada
@@ -99,26 +89,38 @@ const schema = breadcrumbSchema([
     )}
   </Section>
 
-  <!-- Conciertos Pasados -->
-  {past.length > 0 && (
-    <Section bg="white">
-      <SectionHeading title="Conciertos Recientes" />
-      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {past.map((concert) => (
-          <a
-            href={`${import.meta.env.BASE_URL}agenda/${concert.id}/`}
-            class="scroll-reveal group block bg-surface-50 rounded-xl overflow-hidden opacity-80 hover:opacity-100 transition-all"
-          >
-            <div class="p-6">
-              <p class="text-sm text-gray-500 mb-1">{formatDateLong(concert.data.date)}</p>
-              <h3 class="font-display text-lg font-bold text-gray-700 group-hover:text-primary-700 transition-colors">
-                {concert.data.title}
-              </h3>
-              <p class="mt-1 text-gray-500 text-sm">{concert.data.venue}</p>
-            </div>
-          </a>
-        ))}
-      </div>
-    </Section>
-  )}
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const now = new Date();
+      const todayStr = now.toLocaleDateString('en-CA');
+      const todayTime = new Date(todayStr).getTime();
+
+      document.querySelectorAll('[data-concert-date]').forEach((el) => {
+        const dateStr = (el as HTMLElement).dataset.concertDate!;
+        const concertTime = new Date(dateStr).getTime();
+        const card = el.closest('[data-concert-card]') as HTMLElement;
+
+        if (dateStr === todayStr) {
+          // HOY
+          const badge = document.createElement('span');
+          badge.textContent = '¡HOY!';
+          badge.className = 'absolute top-2 right-2 bg-accent-500 text-white text-xs font-bold px-2 py-1 rounded-full animate-pulse';
+          el.appendChild(badge);
+        } else if (concertTime > todayTime && concertTime - todayTime <= 7 * 24 * 60 * 60 * 1000) {
+          // PRÓXIMO (falta 1 semana o menos)
+          const badge = document.createElement('span');
+          badge.textContent = 'Próximo';
+          badge.className = 'absolute top-2 right-2 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-full';
+          el.appendChild(badge);
+        } else if (concertTime > todayTime) {
+          // FUTURO - sin badge
+        } else {
+          // PASADO - ocultar
+          if (card) {
+            card.style.display = 'none';
+          }
+        }
+      });
+    });
+  </script>
 </BaseLayout>
