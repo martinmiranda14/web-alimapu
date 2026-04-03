@@ -22,3 +22,8 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# easter egg (solo local)
+src/pages/soldados-caidos.astro
+src/content/integrantes/0fe91dff.md
+src/content/integrantes/22a97612.md

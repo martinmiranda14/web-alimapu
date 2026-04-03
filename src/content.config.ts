@@ -57,7 +57,7 @@ const integrantes = defineCollection({
   schema: z.object({
     name: z.string(),
     instrument: z.string(),
-    section: z.enum(['cuerdas', 'maderas', 'bronces', 'percusion', 'direccion']),
+    section: z.enum(['cuerdas', 'maderas', 'bronces', 'percusion', 'direccion', 'ex-integrantes']),
     photo: z.string().optional(),
     photoPosition: z.string().optional(),
     order: z.number().default(99),
