@@ -68,9 +68,12 @@ const schema = breadcrumbSchema([
         <p class="text-gray-600 text-lg leading-relaxed">{data.futureText}</p>
         <a
           href={`${import.meta.env.BASE_URL}sobre-nosotros/`}
-          class="inline-block mt-6 text-accent-600 hover:text-accent-500 font-medium transition-colors"
+          class="inline-flex items-center px-4 py-2 border border-accent-400/50 text-accent-400 hover:bg-accent-400 hover:text-primary-950 text-sm font-medium rounded-lg transition-colors mt-6"
         >
-          &larr; Volver a Sobre Nosotros
+          <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+          Volver a Sobre Nosotros
         </a>
       </div>
     </Section>

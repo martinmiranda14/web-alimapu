@@ -13,9 +13,7 @@ const today = new Date();
 
 const allConcerts = await getCollection('conciertos', ({ data }) => !data.draft && !data.isCancelled);
 const upcomingConcerts = allConcerts
-  .filter((c) => c.data.date >= today)
-  .sort((a, b) => a.data.date.getTime() - b.data.date.getTime())
-  .slice(0, 3);
+  .sort((a, b) => a.data.date.getTime() - b.data.date.getTime());
 
 const allNews = await getCollection('noticias', ({ data }) => !data.draft);
 const latestNews = allNews
@@ -66,8 +64,9 @@ const schema = musicGroupSchema();
           <a
             href={`${base}agenda/${concert.id}/`}
             class="scroll-reveal group block bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden"
+            data-home-concert={concert.data.date.toISOString().split('T')[0]}
           >
-            <div class="bg-primary-950 p-4 text-center">
+            <div class="bg-primary-950 p-4 text-center relative" data-home-concert-date={concert.data.date.toISOString().split('T')[0]}>
               <p class="text-accent-400 font-display text-lg font-bold">
                 {formatDateShort(concert.data.date)}
               </p>
@@ -96,7 +95,7 @@ const schema = musicGroupSchema();
     <div class="text-center mt-10">
       <a
         href={`${base}agenda/`}
-        class="inline-flex items-center text-primary-700 hover:text-primary-900 font-semibold transition-colors"
+        class="inline-flex items-center justify-center px-6 py-3 border-2 border-primary-700 text-primary-700 hover:bg-primary-700 hover:text-white font-semibold rounded-lg transition-colors"
       >
         Ver toda la agenda
         <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -157,18 +156,31 @@ const schema = musicGroupSchema();
       title="Últimas Noticias"
       subtitle="Mantente informado sobre nuestras actividades"
     />
-    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+    <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
       {latestNews.map((news) => (
         <a
           href={`${base}noticias/${news.id}/`}
           class="scroll-reveal group block bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden"
         >
+          <div class="bg-primary-950 p-4 text-center">
+            <p class="text-accent-400 font-display text-lg font-bold">
+              {formatDateShort(news.data.date)}
+            </p>
+          </div>
           <div class="p-6">
-            <p class="text-sm text-gray-500 mb-2">{formatDateShort(news.data.date)}</p>
-            <h3 class="font-display text-lg font-bold text-primary-950 group-hover:text-primary-700 transition-colors">
+            <h3 class="font-display text-xl font-bold text-primary-950 group-hover:text-primary-700 transition-colors">
               {news.data.title}
             </h3>
             <p class="mt-2 text-gray-600 text-sm line-clamp-3">{news.data.description}</p>
+            {news.data.tags && news.data.tags.length > 0 && (
+              <div class="mt-4 flex flex-wrap gap-2">
+                {news.data.tags.map((tag: string) => (
+                  <span class="bg-primary-100 text-primary-800 text-xs font-medium px-2 py-1 rounded capitalize">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            )}
           </div>
         </a>
       ))}
@@ -176,7 +188,7 @@ const schema = musicGroupSchema();
     <div class="text-center mt-10">
       <a
         href={`${base}noticias/`}
-        class="inline-flex items-center text-primary-700 hover:text-primary-900 font-semibold transition-colors"
+        class="inline-flex items-center justify-center px-6 py-3 border-2 border-primary-700 text-primary-700 hover:bg-primary-700 hover:text-white font-semibold rounded-lg transition-colors"
       >
         Ver todas las noticias
         <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -204,6 +216,42 @@ const schema = musicGroupSchema();
       </a>
     </div>
   </Section>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const now = new Date();
+      const todayStr = now.toLocaleDateString('en-CA');
+      const todayTime = new Date(todayStr).getTime();
+      let shown = 0;
+
+      document.querySelectorAll('[data-home-concert]').forEach((card) => {
+        const dateStr = (card as HTMLElement).dataset.homeConcert!;
+        const concertTime = new Date(dateStr).getTime();
+        const header = card.querySelector('[data-home-concert-date]');
+
+        if (concertTime < todayTime) {
+          (card as HTMLElement).style.display = 'none';
+        } else if (shown < 3) {
+          shown++;
+          if (header) {
+            if (dateStr === todayStr) {
+              const badge = document.createElement('span');
+              badge.textContent = '¡HOY!';
+              badge.className = 'absolute top-2 right-2 bg-accent-500 text-white text-xs font-bold px-2 py-1 rounded-full animate-pulse';
+              header.appendChild(badge);
+            } else if (concertTime - todayTime <= 7 * 24 * 60 * 60 * 1000) {
+              const badge = document.createElement('span');
+              badge.textContent = 'Próximo';
+              badge.className = 'absolute top-2 right-2 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-full';
+              header.appendChild(badge);
+            }
+          }
+        } else {
+          (card as HTMLElement).style.display = 'none';
+        }
+      });
+    });
+  </script>
 
   <!-- Escúchanos -->
   <Section bg="white">
