@@ -3,5 +3,5 @@ name: "Cristóbal Mora Quijada"
 instrument: "Violín I"
 section: "cuerdas"
 photo: "/images/integrantes/cristobal-mora.webp"
-order: 11
+order: 101
 ---

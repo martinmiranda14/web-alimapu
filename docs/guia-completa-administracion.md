@@ -225,10 +225,48 @@ bio: |
 
 ### Sobre el campo `order`
 
-Controla el orden en que aparecen los músicos dentro de su sección:
-- Números menores aparecen primero
-- Se recomienda usar múltiplos de 10: `10, 20, 30...`
-- Así puedes insertar alguien en posición 15 entre el 10 y el 20
+Controla el orden en que aparecen los músicos dentro de su sección. Números menores aparecen primero.
+
+El sistema usa **rangos de 100** por instrumento, así cada instrumento soporta hasta 99 músicos:
+
+#### Cuerdas (`section: "cuerdas"`)
+
+| Instrumento  | Rango       | Ejemplo |
+| ------------ | ----------- | ------- |
+| Violín I     | 100 – 199   | 100, 101, 102... |
+| Violín II    | 200 – 299   | 200, 201, 202... |
+| Viola        | 300 – 399   | 300, 301, 302... |
+| Violonchello | 400 – 499   | 400, 401, 402... |
+| Contrabajo   | 500 – 599   | 500, 501, 502... |
+
+#### Maderas (`section: "maderas"`)
+
+| Instrumento    | Rango       |
+| -------------- | ----------- |
+| Flauta         | 100 – 199   |
+| Oboe           | 200 – 299   |
+| Clarinete      | 300 – 399   |
+| Fagot          | 400 – 499   |
+
+#### Bronces (`section: "bronces"`)
+
+| Instrumento | Rango       |
+| ----------- | ----------- |
+| Trompeta    | 100 – 199   |
+| Corno       | 200 – 299   |
+| Trombón     | 300 – 399   |
+| Tuba        | 400 – 499   |
+
+#### Percusión y Piano (`section: "percusion"`)
+
+| Instrumento | Rango       |
+| ----------- | ----------- |
+| Percusión   | 100 – 199   |
+| Piano       | 200 – 299   |
+
+> **Nota:** El `order` solo afecta dentro de cada sección. Un violín con order 100 y una flauta con order 100 no se mezclan porque están en secciones distintas (`cuerdas` vs `maderas`).
+>
+> Si dos personas tienen el mismo número, ambas aparecen pero el orden entre ellas no está garantizado.
 
 ### Si no hay foto
 

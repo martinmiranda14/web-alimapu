@@ -2,7 +2,7 @@
 name: "Scarlett Antonia Arias Cubillos"
 instrument: "Viola"
 section: "cuerdas"
-order: 1
+order: 300
 featured: true
 photo: "/images/integrantes/scarlet-arias.webp"
 isActive: true

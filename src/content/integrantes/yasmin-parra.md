@@ -4,5 +4,5 @@ instrument: "Violín II"
 section: "cuerdas"
 photo: "/images/integrantes/yasmin-parra.webp"
 photoPosition: "top"
-order: 20
+order: 200
 ---
