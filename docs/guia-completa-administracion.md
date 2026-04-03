@@ -387,13 +387,19 @@ Texto libre describiendo el evento fotografiado.
 
 ---
 
-## Editar la Misión y Visión
+## Editar la página "Sobre Nosotros"
 
-### Archivo: `src/content/paginas/sobre-nosotros.md`
+La página `/sobre-nosotros/` muestra tres secciones: **Misión**, **Visión** y un **resumen de la Historia**. Cada una se edita desde un archivo diferente:
 
-Este archivo contiene la misión y visión que se muestran en la página "Sobre Nosotros". Se puede editar directamente desde GitHub.
+| Sección en la página     | Archivo que la controla               | Campo(s)    |
+| ------------------------ | ------------------------------------- | ----------- |
+| Misión                   | `src/content/paginas/sobre-nosotros.md` | `mision`  |
+| Visión                   | `src/content/paginas/sobre-nosotros.md` | `vision`  |
+| Resumen de Historia      | `src/content/paginas/historia.md`       | `resumen` |
 
-### Ejemplo
+### Misión y Visión
+
+**Archivo:** `src/content/paginas/sobre-nosotros.md`
 
 ```yaml
 ---
@@ -404,7 +410,21 @@ vision: "Texto de la visión aquí."
 ---
 ```
 
-### Referencia de campos
+### Resumen de Historia
+
+**Archivo:** `src/content/paginas/historia.md` → campo `resumen`
+
+Es una lista de párrafos que aparecen como texto introductorio en la sección "Historia" de la página Sobre Nosotros:
+
+```yaml
+resumen:
+  - "Primer párrafo del resumen."
+  - "Segundo párrafo del resumen."
+```
+
+> **Nota:** Este resumen es independiente de los hitos de la línea de tiempo (que se muestran en `/sobre-nosotros/historia/`).
+
+### Referencia de campos (sobre-nosotros.md)
 
 | Campo         | Obligatorio | Qué poner                                         |
 | ------------- | ----------- | -------------------------------------------------- |
