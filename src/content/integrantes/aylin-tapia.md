@@ -1,5 +1,5 @@
 ---
-name: "Aylin Tapia"
+name: "Ayline Paz Tapia Zabala"
 instrument: "Director Asistente"
 section: "direccion"
 order: 2
