@@ -1,6 +1,6 @@
 ---
 name: "Aracely Castillo Reyes"
-role: "Difusión"
+role: "Co-coordinadora Difusión"
 order: 6
 photo: ""
 ---
