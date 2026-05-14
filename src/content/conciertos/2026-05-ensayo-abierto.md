@@ -6,7 +6,7 @@ time: "17:00"
 endTime: "19:30"
 venue: "Ex-Cárcel Valparaíso, Sala de Lectura"
 venueAddress: "Ex-Cárcel, Valparaíso"
-image: "/images/conciertos/ensayo-abierto-mayo.jpeg"
+image: "/images/conciertos/ensayo-abierto-mayo-2026.jpeg"
 imageAlt: "Afiche Ensayo Abierto Orquesta Filarmónica Alimapu"
 ensemble: "sinfonico"
 isFree: true
