@@ -1,6 +1,6 @@
 ---
 title: "Ensayo Abierto"
-description: "Ensayo abierto de la Orquesta Filarmónica Alimapu en la Ex-Cárcel de Valparaíso. Una oportunidad para conocer el proceso de preparación musical de la orquesta en un ambiente cercano y abierto a toda la comunidad."
+description: "Ensayo abierto de la Orquesta Filarmónica Alimapu en la Sala de Lectura de la Ex-Cárcel de Valparaíso. Entrada liberada."
 date: 2026-05-23
 time: "17:00"
 endTime: "19:30"
@@ -8,7 +8,7 @@ venue: "Ex-Cárcel Valparaíso, Sala de Lectura"
 venueAddress: "Ex-Cárcel, Valparaíso"
 image: "/images/conciertos/ensayo-abierto-mayo-2026.jpeg"
 imageAlt: "Afiche Ensayo Abierto Orquesta Filarmónica Alimapu"
-ensemble: "sinfonico"
+ensemble: "orquesta"
 isFree: true
 draft: false
 ---
