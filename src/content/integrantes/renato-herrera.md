@@ -1,8 +1,8 @@
 ---
-name: "Renato Herrera"
+name: "Renato Herrera Mayorga"
 instrument: "Clarinete"
 section: "maderas"
 photo: "/images/integrantes/renato_herrera.png"
 order: 303
-bio: "Clarinetista de la orquesta desde 2020. Participa en la sección de maderas con compromiso y buen nivel interpretativo."
+bio: "Comenzó sus estudios de clarinete a los 12 años, ingresando en 2018 a la Orquesta Estudiantil de San Felipe. En 2022 se incorporó a la Orquesta Latinoamericana del colegio Instituto Abdón Cifuentes, con la que participó en el X Encuentro de Orquestas Latinoamericanas en La Serena (COLCHI). En 2023 ingresó a la etapa básica de clarinete en la Facultad de Artes de la Universidad de Chile. En 2025 entró a estudiar Ingeniería Civil Eléctrica en la UTFSM y asumió como primer clarinete en su orquesta estudiantil. En 2026 fue seleccionado para la Orquesta Juvenil Regional de Valparaíso e ingresó como primer clarinete a la Orquesta Alimapu."
 ---
