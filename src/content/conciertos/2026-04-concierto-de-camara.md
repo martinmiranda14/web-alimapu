@@ -38,7 +38,7 @@ draft: false
 
 El programa contempla cinco agrupaciones de cámara, interpretadas por músicas y músicos de la Filarmónica, ofreciendo un recorrido sonoro diverso que transita por distintos formatos instrumentales, estilos y épocas del mundo musical latino y europeo. Este tipo de formatos aprovechan la intimidad del lugar, generando una conexión cercana entre la audiencia y los intérpretes, desarrollando un espacio musical distinto al que la orquesta ofrece en su formato sinfónico.
 
-La jornada iniciará con los dúos para flauta 2 y 3 de J. Quantz, obras donde dos voces interactúan a través de desafíos, imitaciones y entrelazamientos, creando una bella conversación entre ambos instrumentos. Continuará el primer movimiento del concierto para tres violines de G. Telemann y el dúo concertante para oboes de F. Ferling, mostrando la evolución de las interacciones entre dos y tres intérpretes a lo largo de distintas épocas.
+La jornada iniciará con los Duetos No. 2 y 3 para flauta de J. Quantz, obras donde dos voces interactúan a través de desafíos, imitaciones y entrelazamientos, creando una bella conversación entre ambos instrumentos. Continuará el primer movimiento del concierto para tres violines de G. Telemann y el dúo concertante para oboes de F. Ferling, mostrando la evolución de las interacciones entre dos y tres intérpretes a lo largo de distintas épocas.
 
 Siguiendo esta transición, se presentará un trío de corno, trombón y piano con piezas que evocan danzas: *Berceuse* de G. Bazilewsky, *Odeón* de Ernesto Nazareth y *Terna Saudade* de Anacleto de Medeiros, reconocidos compositores brasileños.
 

@@ -3,14 +3,14 @@ title: "Nuestra Historia"
 description: "Conoce la historia de la Orquesta Filarmónica Alimapu, desde su origen como concierto benéfico en 2017 hasta convertirse en un referente cultural de Valparaíso."
 subtitle: "Desde un concierto solidario hasta un proyecto cultural para Valparaíso"
 resumen:
-  - "Los orígenes de la Orquesta Filarmónica Alimapu se remontan a **2017**, cuando un grupo de músicos locales liderados por **Danitza Villarroel** realizaron un concierto benéfico en el Teatro Municipal de Valparaíso para apoyar a los damnificados por los devastadores incendios forestales."
+  - "Los orígenes de la Orquesta Filarmónica Alimapu se remontan a **2017**, cuando un grupo de músicos locales liderados por **Danitza Villarroel** realizó un concierto benéfico en el Teatro Municipal de Valparaíso para apoyar a los damnificados por los devastadores incendios forestales."
   - "Fundada formalmente en **2019**, la orquesta se consolidó como una agrupación profesional que interpreta un repertorio diverso en espacios convencionales y no convencionales, incluyendo teatros, iglesias, plazas y escuelas."
   - "Hoy, Alimapu es un proyecto que integra una **orquesta filarmónica** y una **banda**, ambas comprometidas con llevar la música a todos los rincones de la región."
-  - Todo esto es parte de lo que ha desarrollado la orquesta en estos años de trabajo
+  - "Estos logros son el resultado de años de trabajo dedicado al desarrollo cultural de la región."
 hitos:
   - year: "2017"
     title: "El origen: un concierto solidario"
-    description: "Un grupo de músicos locales, liderados por Danitza Villarroel, se reunieron para realizar un concierto benéfico en el Teatro Municipal de Valparaíso. El objetivo: recaudar fondos para apoyar a los damnificados por los devastadores incendios forestales que azotaron la región. Esta experiencia reveló el poder transformador de la música y la necesidad de una agrupación estable en Valparaíso."
+    description: "Un grupo de músicos locales, liderados por Danitza Villarroel, se reunió para realizar un concierto benéfico en el Teatro Municipal de Valparaíso. El objetivo: recaudar fondos para apoyar a los damnificados por los devastadores incendios forestales que azotaron la región. Esta experiencia reveló el poder transformador de la música y la necesidad de una agrupación estable en Valparaíso."
   - year: "2018"
     title: "Consolidando la idea"
     description: "Motivados por la experiencia del concierto benéfico, los músicos continuaron reuniéndose de manera informal. Se realizaron ensayos y pequeñas presentaciones que fueron fortaleciendo los lazos del grupo y definiendo la visión de lo que sería el proyecto Alimapu."
