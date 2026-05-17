@@ -45,9 +45,7 @@ const sortedTeam = team.sort((a, b) => a.data.order - b.data.order);
           )}
           <h3 class="font-display text-lg font-bold text-primary-950">{member.data.name}</h3>
           <p class="text-accent-600 text-sm font-medium mt-1">{member.data.role}</p>
-          {member.data.bio && (
-            <p class="text-gray-600 text-sm mt-3">{member.data.bio}</p>
-          )}
+
         </button>
       ))}
     </div>
