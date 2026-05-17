@@ -4,5 +4,5 @@ instrument: "Oboe"
 section: "maderas"
 photo: "/images/integrantes/monserrat-jopia.webp"
 order: 200
-bio: "Integrante fundadora de la orquesta cumpliendo el rol de primer oboe, tambien es la lider del comité de difusión de la orquesta."
+bio: "Música oboísta de la Orquesta Filarmónica Alimapu, egresada de la carrera de Interpretación Superior en Oboe en la Pontificia Universidad Católica de Valparaíso. Anterior Coordinadora de Difusión e Imagen Corporativa de la Orquesta Filarmónica Alimapu y actual Presidenta de la Asociación Filarmónica del Pacífico."
 ---
